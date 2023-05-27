@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "jsx": "preserve",
+        "types": ["node"],
+        "baseUrl": ".",
+        "experimentalDecorators": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "paths": {
+          "@/*": [
+            "src/*"
+          ],
+        },
+    }
+  }
+  
+  
