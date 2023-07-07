@@ -18,8 +18,8 @@ export class BookShopFacade {
         this.orderService = new OrderService();
     }
 
-    public getBooks(): IBook[] {
-        return this.bookCatalog.getBooks();
+    public listBooks(): IBook[] {
+        return this.bookCatalog.listBooks();
     }
 
     public addToCart(bookId: string): void {

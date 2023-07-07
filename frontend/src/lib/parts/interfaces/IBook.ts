@@ -6,4 +6,5 @@ export interface IBook {
     genre_name: string;
     title: string;
     price: number;
+    imageName: string;
 }

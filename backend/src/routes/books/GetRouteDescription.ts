@@ -11,6 +11,10 @@ import {
     Generate500ResponseSchema,
 } from '@src/lib/app/route/description/ResponseDefinition';
 
+export interface IListQuery {
+    search?: string;
+}
+
 export interface IListBook {
     id_book: string;
     id_author: string;
@@ -86,6 +90,17 @@ let routeDefinition: IRouteDefinition = {
     tags: ['Book'],
     summary: 'GET list books route',
     description: 'Route for listing books',
+    parameters: [
+        {
+            in: 'query',
+            name: 'search',
+            required: false,
+            description: 'Search string',
+            schema: {
+                type: 'string',
+            },
+        },
+    ],
     responses: {
         200: Generate200ResponseSchema('Books listed successfully', responseBodySchema),
         400: Generate400ResponseSchema('Bad Request'),

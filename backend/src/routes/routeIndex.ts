@@ -18,6 +18,7 @@ import { GetGenresRoute } from '@src/routes/genres/GetRoute';
 
 // BOOK ROUTES
 import { PostBookRoute } from '@src/routes/book/PostRoute';
+import { GetBookRoute } from '@src/routes/book/GetRoute';
 import { GetBooksRoute } from '@src/routes/books/GetRoute';
 
 export const appRoutes: Route[] = [
@@ -31,5 +32,6 @@ export const appRoutes: Route[] = [
     new GetAuthorsRoute(),
     new GetGenresRoute(),
     new PostBookRoute(),
+    new GetBookRoute(),
     new GetBooksRoute(),
 ];

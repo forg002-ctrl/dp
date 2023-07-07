@@ -9,17 +9,25 @@ export interface IListBook {
     imageName: string;
 }
 
+export interface IListBookParams {
+    search?: string;
+}
+
+export interface IListBookRepositoryParams {
+    search: string;
+}
+
 export interface IBookListingResponse {
     rows: IListBook[];
     rowsCount: number;
 }
 
 export interface IBookListingRepository {
-    list(): Promise<IBookListingResponse>;
+    list(params: IListBookRepositoryParams): Promise<IBookListingResponse>;
 }
 
 export interface IBookListing {
-    execute(): Promise<IBookListingResponse>;
+    execute(params: IListBookParams): Promise<IBookListingResponse>;
 }
 
 export class BookListing implements IBookListing {
@@ -31,7 +39,9 @@ export class BookListing implements IBookListing {
         this.repo = options.repo;
     }
 
-    public async execute(): Promise<IBookListingResponse> {
-        return await this.repo.list();
+    public async execute(params: IListBookParams): Promise<IBookListingResponse> {
+        return await this.repo.list({
+            search: params.search ? params.search : '',
+        });
     }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Grid, Button, MenuItem } from '@material-ui/core';
 
-import Loader from '../UI/loader/Loader';
+import { Loader } from '../../components/UI/loader/Loader';
 
 import { useFetching } from '../../hooks/useFetching';
 

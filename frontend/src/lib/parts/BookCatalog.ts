@@ -7,7 +7,7 @@ export class BookCatalog {
         this.books = books;
     }
 
-    getBooks(): IBook[] {
+    listBooks(): IBook[] {
         return this.books;
     }
 
