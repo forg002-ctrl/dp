@@ -4,7 +4,8 @@ import { Route } from '@src/lib/app/route/Route';
 
 import { routeDescription,
     IRequestBody,
-    IResponseBody } from '@src/routes/book/PostRouteDescription';
+    IResponseBody
+} from '@src/ext/shared/routes//book/PostRouteDescription';
 
 import { GenreGetting } from '@src/modules/genre/GenreGetting';
 import { GenreRepository } from '@src/modules/genre/repository/GenreRepository';

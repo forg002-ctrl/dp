@@ -6,7 +6,7 @@ import {
     routeDescription,
     IRequestBody,
     IResponseBody,
-} from '@src/routes/auth/register/PostRouteDescription';
+} from '@src/ext/shared/routes/auth/register/PostRouteDescription';
 
 import { UserRepository } from '@src/modules/user/repository/UserRepository';
 import { SigningUp } from '@src/modules/auth/SigningUp';

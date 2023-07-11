@@ -5,7 +5,8 @@ import {
     routeDescription,
     IRequestParams,
     IResponseBody,
-} from '@src/routes/book/GetRouteDescription';
+} from '@src/ext/shared/routes//book/GetRouteDescription';
+
 import { BookGetting } from '@src/modules/book/BookGetting';
 import { BookRepository } from '@src/modules/book/repository/BookRepository';
 

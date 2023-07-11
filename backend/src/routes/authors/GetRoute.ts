@@ -4,7 +4,8 @@ import { Request, Response } from 'express';
 import {
     routeDescription,
     IResponseBody,
-} from '@src/routes/authors/GetRouteDescription';
+} from '@src/ext/shared/routes//authors/GetRouteDescription';
+
 import { AuthorListing } from '@src/modules/author/AuthorListing';
 import { AuthorRepository } from '@src/modules/author/repository/AuthorRepository';
 

@@ -5,7 +5,8 @@ import {
     routeDescription,
     IRequestParams,
     IResponseBody,
-} from '@src/routes/genre/GetRouteDescription';
+} from '@src/ext/shared/routes//genre/GetRouteDescription';
+
 import { GenreGetting } from '@src/modules/genre/GenreGetting';
 import { GenreRepository } from '@src/modules/genre/repository/GenreRepository';
 

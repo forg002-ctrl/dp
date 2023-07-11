@@ -1,5 +1,5 @@
 import { SchemaObject } from 'ajv';
-import { IResponseContent } from '@src/lib/app/route/description/interfaces/IRouteDefinition';
+import { IResponseContent } from './interfaces/IRouteDefinition';
 
 import {
     Response200Schema,

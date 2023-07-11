@@ -7,8 +7,6 @@ import { Server } from '@src/lib/server/Server';
 
 import { IRouteDescription } from '@src/lib/app/route/description/interfaces/IRouteDescription';
 
-export type HTTP_METHODS = 'POST' | 'GET' | 'PUT' | 'DELETE';
-
 export interface IRouteOptions {
     description: IRouteDescription;
 }

@@ -2,7 +2,8 @@ import { Route } from '@src/lib/app/route/Route';
 import { Request, Response } from 'express';
 
 import { routeDescription,
-    IResponseBody } from '@src/routes/ping/GetRouteDescription';
+    IResponseBody
+} from '@src/ext/shared/routes//ping/GetRouteDescription';
 
 export class GetPingRoute extends Route {
     public constructor() {

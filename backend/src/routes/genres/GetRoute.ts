@@ -4,7 +4,8 @@ import { Request, Response } from 'express';
 import {
     routeDescription,
     IResponseBody,
-} from '@src/routes/genres/GetRouteDescription';
+} from '@src/ext/shared/routes//genres/GetRouteDescription';
+
 import { GenreListing } from '@src/modules/genre/GenreListing';
 import { GenreRepository } from '@src/modules/genre/repository/GenreRepository';
 

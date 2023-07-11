@@ -1,7 +1,7 @@
 import { JSONSchemaType } from 'ajv';
 
-import { IRouteDefinition } from '@src/lib/app/route/description/interfaces/IRouteDefinition';
-import { IRouteDescription } from '@src/lib/app/route/description/interfaces/IRouteDescription';
+import { IRouteDefinition } from '../../lib/routing/description/interfaces/IRouteDefinition';
+import { IRouteDescription } from '../../lib/routing/description/interfaces/IRouteDescription';
 
 import {
     Generate200ResponseSchema,
@@ -9,65 +9,50 @@ import {
     Generate401ResponseSchema,
     Generate404ResponseSchema,
     Generate500ResponseSchema,
-} from '@src/lib/app/route/description/ResponseDefinition';
+} from '../../lib/routing/description/ResponseDefinition';
 
 export interface IRequestParams {
-    id_book: string;
+    id_author: string;
 }
 
 export interface IResponseBody {
-    id_book: string;
     id_author: string;
-    id_genre: string;
-    author_fullname: string;
-    genre_name: string;
-    title: string;
-    price: number;
-    imageName: string;
+    firstname: string;
+    lastname: string;
+    birthdate: string;
     info: string;
+    booksCount: number;
 }
 
 let responseBodySchema: JSONSchemaType<IResponseBody> = {
     type: 'object',
     properties: {
-        id_book: {
-            type: 'string',
-        },
         id_author: {
             type: 'string',
         },
-        id_genre: {
+        firstname: {
             type: 'string',
         },
-        author_fullname: {
+        lastname: {
             type: 'string',
         },
-        genre_name: {
-            type: 'string',
-        },
-        title: {
-            type: 'string',
-        },
-        price: {
-            type: 'number',
-        },
-        imageName: {
+        birthdate: {
             type: 'string',
         },
         info: {
             type: 'string',
         },
+        booksCount: {
+            type: 'number',
+        },
     },
     required: [
-        'id_book',
         'id_author',
-        'id_genre',
-        'author_fullname',
-        'genre_name',
-        'title',
-        'price',
-        'imageName',
+        'firstname',
+        'lastname',
+        'birthdate',
         'info',
+        'booksCount',
     ],
 };
 
@@ -78,8 +63,8 @@ let routeDefinition: IRouteDefinition = {
     parameters: [
         {
             in: 'path',
-            name: 'id_book',
-            description: 'Book Identifier',
+            name: 'id_author',
+            description: 'Author Identifier',
             required: true,
             schema: {
                 type: 'string',
@@ -87,7 +72,7 @@ let routeDefinition: IRouteDefinition = {
         },
     ],
     responses: {
-        200: Generate200ResponseSchema('Book found successfully', responseBodySchema),
+        200: Generate200ResponseSchema('Author found successfully', responseBodySchema),
         400: Generate400ResponseSchema('Bad Request'),
         401: Generate401ResponseSchema('Unauthorized'),
         404: Generate404ResponseSchema('Not Found'),
@@ -97,7 +82,7 @@ let routeDefinition: IRouteDefinition = {
 
 export const routeDescription: IRouteDescription = {
     httpMethod: 'GET',
-    endpoint: '/book/:id_book',
+    endpoint: '/author/:id_author',
     definition: routeDefinition,
     authRequired: true,
 };

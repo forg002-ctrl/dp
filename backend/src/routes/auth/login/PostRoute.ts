@@ -6,7 +6,7 @@ import {
     routeDescription,
     IRequestBody,
     IResponseBody,
-} from '@src/routes/auth/login/PostRouteDescription';
+} from '@src/ext/shared/routes/auth/login/PostRouteDescription';
 
 import { SigningIn } from '@src/modules/auth/SigningIn';
 import { UserGettingByUsername } from '@src/modules/user/UserGettingByUsername';

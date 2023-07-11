@@ -1,7 +1,7 @@
 import { JSONSchemaType } from 'ajv';
 
-import { IRouteDefinition } from '@src/lib/app/route/description/interfaces/IRouteDefinition';
-import { IRouteDescription } from '@src/lib/app/route/description/interfaces/IRouteDescription';
+import { IRouteDefinition } from '../../lib/routing/description/interfaces/IRouteDefinition';
+import { IRouteDescription } from '../../lib/routing/description/interfaces/IRouteDescription';
 
 import {
     Generate200ResponseSchema,
@@ -9,7 +9,7 @@ import {
     Generate401ResponseSchema,
     Generate404ResponseSchema,
     Generate500ResponseSchema,
-} from '@src/lib/app/route/description/ResponseDefinition';
+} from '../../lib/routing/description/ResponseDefinition';
 
 export interface IListQuery {
     search?: string;

@@ -6,7 +6,8 @@ import {
     routeDescription,
     IResponseBody,
     IListQuery,
-} from '@src/routes/books/GetRouteDescription';
+} from '@src/ext/shared/routes//books/GetRouteDescription';
+
 import { BookListing } from '@src/modules/book/BookListing';
 import { BookRepository } from '@src/modules/book/repository/BookRepository';
 

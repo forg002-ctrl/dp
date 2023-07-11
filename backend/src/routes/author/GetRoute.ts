@@ -5,7 +5,7 @@ import {
     routeDescription,
     IRequestParams,
     IResponseBody,
-} from '@src/routes/author/GetRouteDescription';
+} from '@src/ext/shared/routes/author/GetRouteDescription';
 import { AuthorGetting } from '@src/modules/author/AuthorGetting';
 import { AuthorRepository } from '@src/modules/author/repository/AuthorRepository';
 

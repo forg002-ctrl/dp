@@ -1,7 +1,8 @@
 import { SchemaObject } from 'ajv';
 
-import { HTTP_METHODS } from '@src/lib/app/route/Route';
-import { IRouteDefinition } from '@src/lib/app/route/description/interfaces/IRouteDefinition';
+import { IRouteDefinition } from './IRouteDefinition';
+
+export type HTTP_METHODS = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
 export interface IRouteDescription {
     httpMethod: HTTP_METHODS;
