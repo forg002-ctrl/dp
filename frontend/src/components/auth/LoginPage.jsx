@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { TextField } from '@material-ui/core';
 
-import '../auth/LoginPage.css'
+import './LoginPage.css'
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');

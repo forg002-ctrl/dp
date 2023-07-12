@@ -1,18 +1,24 @@
 {
-    "compilerOptions": {
-        "jsx": "preserve",
-        "types": ["node"],
-        "baseUrl": ".",
-        "experimentalDecorators": true,
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "paths": {
-          "@/*": [
-            "src/*"
-          ],
-        },
-    }
-  }
-  
-  
+  "extends": "./tsconfig.paths.json",
+  "compilerOptions":{
+     "target":"es5",
+     "module":"es6",
+     "moduleResolution":"node",
+     "lib":[
+        "es6",
+        "dom"
+     ],
+     "sourceMap":true,
+     "jsx":"react-jsx",
+     "strict":true,
+     "noImplicitReturns":true,
+     "baseUrl": "src",
+  },
+  "include":[
+     "**/*.ts",
+     "**/*.tsx"
+  ],
+  "exclude":[
+     "node_modules"
+  ]
+}

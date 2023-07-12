@@ -1,69 +1,44 @@
-import { useState, useEffect, FC } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useFetch } from 'hooks/useFetch';
 
-import { BookItem } from '../books/BookItem';
-import { Loader } from "../../components/UI/loader/Loader";
+import { IListBook as IBook, IResponseBody } from 'ext/shared/routes/books/GetRouteDescription';
 
-import { IBook } from "@/lib/parts/interfaces/IBook";
-import { BookService, IListBook } from '../../services/BookService';
+import { BookItem } from 'pages/books/BookItem';
+import { Loader } from 'components/UI/loader/Loader';
 
-import './BookList.css'
-
-export const BookList: FC = () => {
-    const navigate = useNavigate();
-
-    const [loading, setLoading] = useState(false);
-    const [books, setBooks] = useState<IListBook[]>([]);
+export const BookList = () => {
     const [query, setQuery] = useState('');
     const [search, setSearch] = useState('');
-  
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-
-                let response = await BookService.listBooks(search);
-                setBooks(response.rows);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [search])
+    
+    const { data, error } = useFetch<IResponseBody>(`http://localhost:3001/books?search=${search}`);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSearch();
         }
     };
-
     const handleSearch = () => {
         setSearch(query);
         setQuery('');
     };
 
-    const handelRedirectToDetailPage = (id_book: string) => {
-        navigate(`/book/${id_book}`);
+    if (error) {
+        return <p>Error</p>
     }
-
     return(
-        <div className="main-container">
-            <div className="search-container">
-                <div className="input-box">
-                    <i />
-                    <input type="text" placeholder="Search here..." value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={handleKeyDown}/>
-                    <button className="search-button" onClick={handleSearch}>Search</button>
+        <div className="p-8">
+            <div className="flex justify-center">
+                <div className="flex relative h-[60px] max-w-[700px] w-full bg-[#F3F8F2] mb-4 rounded-lg shadow-lg shadow-grey-400">
+                    <input className="h-full w-3/4 text-base pr-[155px] pl-[65px] bg-transparent focuse-visible: outline-none" type="text" placeholder="Search here..." value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={handleKeyDown}/>
+                    <button className="absolute top-1/2 translate-y-[-50%] right-5 text-base px-[30px] py-3 bg-[#39A2AE] cursor-pointer rounded-lg" onClick={handleSearch}>Search</button>
                 </div>
             </div>
-            {loading ? 
-                <Loader /> 
+            {!data ? 
+                <Loader />
             :
-                <div className="grid-container">
-                    {books.map((book: IBook, key: number) =>
-                        <button className="book-button" onClick={() => handelRedirectToDetailPage(book.id_book)}>
-                            <BookItem book={book} key={key}/>
-                        </button>
+                <div className="grid grid-flow-row gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {data.rows.map((book: IBook, key: number) =>
+                        <BookItem book={book} key={key} />
                     )}
                 </div>
             }

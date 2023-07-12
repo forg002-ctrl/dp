@@ -1,28 +1,32 @@
-import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { IBook } from '@/lib/parts/interfaces/IBook';
-
-import './BookItem.css'
+import { IListBook as IBook } from 'ext/shared/routes/books/GetRouteDescription';
 
 type BookItemProps = {
     book: IBook;
 }
 
-export const BookItem: FC<BookItemProps> = ({book}) => {
+export const BookItem = (props: BookItemProps) => {
+    const navigate = useNavigate();
+
+    const handelRedirectToDetailPage = (id_book: string) => {
+        navigate(`/book/${id_book}`);
+    }
+
     return (
-    <div className='book-item-card'>
-        <div className='book-item-card-image'>
-            <img src={book.imageName} alt="" />
+        <div className='mt-4 rounded shadow-lg shadow-gray-400 bg-[#F3F8F2] duration-300 hover:-translate-y-1' onClick={() => handelRedirectToDetailPage(props.book.id_book)}>
+            <figure>
+                <img className="object-cover h-72 mx-auto" src={props.book.imageName} alt="" />
+                <hr className='border-2 border-[#39A2AE]' />
+                <figcaption className='p-4'>
+                    <p className='text-xl mb-2 font-bold leading-relaxed'>{props.book.title}</p>
+                    <p className='font-bold'>{props.book.author_fullname}</p>
+                    <div className='mt-6 flex flex-row justify-between'>
+                        <p>Genre: <b>{props.book.genre_name}</b></p>
+                        <p className='text-red-500'>Price: <b>{props.book.price} $</b></p>
+                    </div>
+                </figcaption>
+            </figure>
         </div>
-        <hr />
-        <div className="book-item-card-main">
-            <div className='book-item-title'><b>{book.title}</b></div>
-            <div className='book-item-author'><b>{book.author_fullname}</b></div>
-        </div>
-        <div className='book-item-card-footer'>
-            <div className='book-item-genre'>Genre: <b> {book.genre_name}</b></div>
-            <div className='book-item-price'>Price: <b> {book.price} $</b></div>
-        </div>
-        <br/>
-    </div>)
+    )
 };

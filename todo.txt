@@ -1,0 +1,8 @@
+FRONTEND
+--------
+1) component for error handling
+2) component for 404 page
+3) change localhost at the useFetch hook to .env variable
+
+BACKEND
+--------
