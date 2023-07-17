@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 
 import { routeDescription,
     IResponseBody
-} from '@src/ext/shared/routes//token/PostRouteDescription';
+} from '@src/ext/shared/services/backend/routes//token/PostRouteDescription';
 
 import { UserGetting } from '@src/modules/user/UserGetting';
 import { UserRepository } from '@src/modules/user/repository/UserRepository';

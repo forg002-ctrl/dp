@@ -1,10 +1,10 @@
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 import { Request, Response } from 'express';
 
 import {
     routeDescription,
     IResponseBody,
-} from '@src/ext/shared/routes//authors/GetRouteDescription';
+} from '@src/ext/shared/services/backend/routes//authors/GetRouteDescription';
 
 import { AuthorListing } from '@src/modules/author/AuthorListing';
 import { AuthorRepository } from '@src/modules/author/repository/AuthorRepository';

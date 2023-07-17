@@ -1,5 +1,3 @@
-import { uuid } from 'uuidv4';
-
 export interface IAuthorCreationData {
     firstname: string;
     lastname: string;

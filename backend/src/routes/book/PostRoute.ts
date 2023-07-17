@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 
 import { routeDescription,
     IRequestBody,
-    IResponseBody
-} from '@src/ext/shared/routes//book/PostRouteDescription';
+    IResponseBody,
+} from '@src/ext/shared/services/backend/routes//book/PostRouteDescription';
 
 import { GenreGetting } from '@src/modules/genre/GenreGetting';
 import { GenreRepository } from '@src/modules/genre/repository/GenreRepository';
@@ -27,7 +27,7 @@ export class PostBookRoute extends Route {
 
     public async main(req: Request, res: Response): Promise<void> {
         let body = req.body as IRequestBody;
-        
+
         if (!req.files || !req.files.file) {
             throw new Error('No file passed');
         }

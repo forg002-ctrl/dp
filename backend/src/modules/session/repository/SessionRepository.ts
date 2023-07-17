@@ -1,8 +1,8 @@
 import { Model, ModelCtor } from 'sequelize';
 
-import { Database } from '@src/lib/app/Database';
+import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 
-import { NotFoundError } from '@src/lib/errors/types/NotFoundError';
+import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
 
 import { ISessionCreationRepository, ISessionCreationRepositoryData, ISessionCreationResponse } from '@src/modules/session/SessionCreation';
 import { ISessionGettingOptions, ISessionGettingRepository, ISessionGettingResponse } from '@src/modules/session/SessionGetting';
@@ -12,19 +12,21 @@ export class SessionRepository implements
 ISessionCreationRepository,
 ISessionGettingRepository,
 ISessionDeletingRepository {
-    private db: ModelCtor<Model<any, any>>;
+    private sessionModel: ModelCtor<Model<any, any>>;
 
     public constructor() {
-        let db = Database.GetInstance().getModel('sessions');
-        if (!db) {
+        let postgresqlClient = PostgresqlClient.GetInstance();
+
+        let sessionModel = postgresqlClient.getModel('sessions');
+        if (!sessionModel) {
             throw new Error(`Session model doesn't exist`);
         }
 
-        this.db = db;
+        this.sessionModel = sessionModel;
     }
 
     public async create(data: ISessionCreationRepositoryData): Promise<ISessionCreationResponse> {
-        let response = await this.db.create({
+        let response = await this.sessionModel.create({
             id_session: data.id_session,
             id_user: data.id_user,
         });
@@ -35,7 +37,7 @@ ISessionDeletingRepository {
     }
 
     public async get(options: ISessionGettingOptions): Promise<ISessionGettingResponse> {
-        let response = await this.db.findByPk(options.id_session);
+        let response = await this.sessionModel.findByPk(options.id_session);
         if (!response) {
             throw new NotFoundError('Session was not found');
         }
@@ -48,7 +50,7 @@ ISessionDeletingRepository {
     }
 
     public async removeSession(options: ISessionDeletingOptions): Promise<void> {
-        await this.db.destroy({
+        await this.sessionModel.destroy({
             where: {
                 id_session: options.id_session,
             },

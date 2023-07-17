@@ -14,14 +14,14 @@ export const BookItem = (props: BookItemProps) => {
     }
 
     return (
-        <div className='mt-4 rounded shadow-lg shadow-gray-400 bg-[#F3F8F2] duration-300 hover:-translate-y-1' onClick={() => handelRedirectToDetailPage(props.book.id_book)}>
+        <div className='rounded shadow-lg shadow-gray-400 bg-[#F3F8F2] duration-300 hover:-translate-y-1' onClick={() => handelRedirectToDetailPage(props.book.id_book)}>
             <figure>
-                <img className="object-cover h-72 mx-auto" src={props.book.imageName} alt="" />
+                <img className="object-cover h-64 mx-auto" src={props.book.imageName} alt="" />
                 <hr className='border-2 border-[#39A2AE]' />
                 <figcaption className='p-4'>
-                    <p className='text-xl mb-2 font-bold leading-relaxed'>{props.book.title}</p>
+                    <p className='text-xl font-bold leading-relaxed'>{props.book.title}</p>
                     <p className='font-bold'>{props.book.author_fullname}</p>
-                    <div className='mt-6 flex flex-row justify-between'>
+                    <div className='mt-4 flex flex-row justify-between'>
                         <p>Genre: <b>{props.book.genre_name}</b></p>
                         <p className='text-red-500'>Price: <b>{props.book.price} $</b></p>
                     </div>

@@ -8,10 +8,13 @@ install-backend:
 install-frontend:
 	docker-compose run --rm frontend "npm install"
 
+install-fs_srv:
+	docker-compose run --rm fs_srv "npm install"
+
 install: install-base install-backend install-frontend
 
 start:
-	docker-compose up --remove-orphans -d database backend frontend
+	docker-compose up --remove-orphans -d database backend frontend minio fs_srv
 
 stop:
 	docker-compose stop

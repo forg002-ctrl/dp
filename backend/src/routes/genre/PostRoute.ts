@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 
 import { routeDescription,
     IRequestBody,
     IResponseBody
-} from '@src/ext/shared/routes//genre/PostRouteDescription';
+} from '@src/ext/shared/services/backend/routes//genre/PostRouteDescription';
 
 import { GenreCreation } from '@src/modules/genre/GenreCreation';
 import { GenreRepository } from '@src/modules/genre/repository/GenreRepository';

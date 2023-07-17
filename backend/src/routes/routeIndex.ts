@@ -1,4 +1,4 @@
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 
 import { GetPingRoute } from '@src/routes/ping/GetRoute';
 

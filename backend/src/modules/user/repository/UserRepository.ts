@@ -1,8 +1,8 @@
 import { Model, ModelCtor } from 'sequelize';
 
-import { NotFoundError } from '@src/lib/errors/types/NotFoundError';
+import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
 
-import { Database } from '@src/lib/app/Database';
+import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 
 import { ISigningUpData, ISigningUpRepository, ISigningUpResponse } from '@src/modules/auth/SigningUp';
 import { IUserCheckingByUsernameRepository, IUserCheckingByUsernameOptions, IUserCheckingByUsernameResponse } from '@src/modules/user/UserCheckingByUsername';
@@ -16,19 +16,21 @@ IUserCheckingByUsernameRepository,
 IUserCheckingByEmailRepository,
 IUserGettingByUsernameRepository,
 IUserGettingRepository {
-    private db: ModelCtor<Model<any, any>>;
+    private userModel: ModelCtor<Model<any, any>>;
 
     public constructor() {
-        let db = Database.GetInstance().getModel('users');
-        if (!db) {
+        let postgresqlClient = PostgresqlClient.GetInstance();
+
+        let userModel = postgresqlClient.getModel('users');
+        if (!userModel) {
             throw new Error(`User model doesn't exist`);
         }
 
-        this.db = db;
+        this.userModel = userModel;
     }
 
     public async create(data: ISigningUpData): Promise<ISigningUpResponse> {
-        let response = await this.db.create({
+        let response = await this.userModel.create({
             username: data.username,
             email: data.email,
             password: data.password,
@@ -44,7 +46,7 @@ IUserGettingRepository {
     }
 
     public async checkUsername(options: IUserCheckingByUsernameOptions): Promise<IUserCheckingByUsernameResponse> {
-        let response = await this.db.count({
+        let response = await this.userModel.count({
             where: {
                 username: options.username,
             },
@@ -56,7 +58,7 @@ IUserGettingRepository {
     }
 
     public async checkEmail(options: IUserCheckingByEmailOptions): Promise<IUserCheckingByEmailResponse> {
-        let response = await this.db.count({
+        let response = await this.userModel.count({
             where: {
                 email: options.email,
             },
@@ -68,7 +70,7 @@ IUserGettingRepository {
     }
 
     public async getUserByUsername(options: IUserGettingByUsernameOptions): Promise<IUserGettingByUsernameResponse> {
-        let response = await this.db.findOne({
+        let response = await this.userModel.findOne({
             where: {
                 username: options.username,
             },
@@ -96,7 +98,7 @@ IUserGettingRepository {
     }
 
     public async getUser(options: IUserGettingOptions): Promise<IUserGettingResponse> {
-        let response = await this.db.findByPk(options.id_user);
+        let response = await this.userModel.findByPk(options.id_user);
         if (!response) {
             throw new NotFoundError('Session was not found');
         }

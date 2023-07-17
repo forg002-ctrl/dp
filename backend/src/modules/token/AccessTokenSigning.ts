@@ -1,4 +1,6 @@
-import { JwtService } from '@src/lib/utils/JwtService';
+import { Config } from '@src/lib/Config';
+
+import { JwtService } from '@src/ext/sdk/backend/utils/JwtService';
 
 export interface IAccessTokenSigningData {
     id_user: number;
@@ -22,7 +24,7 @@ export class AccessTokenSigning implements IAccessTokenSigning {
     public execute(payload: IAccessTokenSigningData): string {
         this.validateData(payload);
 
-        return this.jwt.signJwt(payload, 'ACCESS_TOKEN_PRIVATE_KEY', '15h'); //TODO: CHANGE
+        return this.jwt.signJwt(payload, 'ACCESS_TOKEN_PRIVATE_KEY', '15h', Config.ACCESS_TOKEN_PRIVATE_KEY, Config.REFRESH_TOKEN_PRIVATE_KEY); //TODO: CHANGE
     }
 
     private validateData(data: IAccessTokenSigningData): void {

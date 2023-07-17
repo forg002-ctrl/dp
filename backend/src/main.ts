@@ -2,8 +2,8 @@ require('module-alias/register');
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { Config } from '@src/lib/app/Config';
-import { App } from '@src/lib/app/App';
+import { Config } from '@src/lib/Config';
+import { App } from '@src/lib/App';
 
 import { appModels } from '@src/db/modelIndex';
 import { appAssociations } from '@src/db/associationsIndex';

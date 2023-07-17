@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 
 import {
     routeDescription,
     IRequestBody,
     IResponseBody,
-} from '@src/ext/shared/routes/auth/login/PostRouteDescription';
+} from '@src/ext/shared/services/backend/routes/auth/login/PostRouteDescription';
 
 import { SigningIn } from '@src/modules/auth/SigningIn';
 import { UserGettingByUsername } from '@src/modules/user/UserGettingByUsername';

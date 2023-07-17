@@ -1,12 +1,12 @@
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 import { Response } from 'express';
-import { CustomRequest } from '@src/lib/server/middlewares/IdentificationMiddleware';
+import { CustomRequest } from '@src/ext/sdk/backend/server/middlewares/IdentificationMiddleware';
 
 import {
     routeDescription,
     IResponseBody,
     IListQuery,
-} from '@src/ext/shared/routes//books/GetRouteDescription';
+} from '@src/ext/shared/services/backend/routes//books/GetRouteDescription';
 
 import { BookListing } from '@src/modules/book/BookListing';
 import { BookRepository } from '@src/modules/book/repository/BookRepository';

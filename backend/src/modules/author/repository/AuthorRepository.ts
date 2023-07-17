@@ -1,8 +1,8 @@
 import { Model, ModelCtor, Sequelize } from 'sequelize';
 
-import { NotFoundError } from '@src/lib/errors/types/NotFoundError';
+import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
 
-import { Database } from '@src/lib/app/Database';
+import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 
 import { IAuthorCreationRepoData, IAuthorCreationResponse, IAuthorCreationRepository } from '@src/modules/author/AuthorCreation';
 import { IAuthorGettingOptions, IAuthorGettingRepository, IAuthorGettingResponse } from '@src/modules/author/AuthorGetting';
@@ -16,12 +16,14 @@ IAuthorGettingRepository {
     private bookModel: ModelCtor<Model<any, any>>;
 
     public constructor() {
-        let authorModel = Database.GetInstance().getModel('authors')
+        let postgresqlClient = PostgresqlClient.GetInstance();
+
+        let authorModel = postgresqlClient.getModel('authors');
         if (!authorModel) {
             throw new Error(`Author Model doesn't exist`);
         }
 
-        let bookModel = Database.GetInstance().getModel('books')
+        let bookModel = postgresqlClient.getModel('books');
         if (!bookModel) {
             throw new Error(`Book Model doesn't exist`);
         }
@@ -49,7 +51,7 @@ IAuthorGettingRepository {
                 {
                     model: this.bookModel,
                     attributes: [],
-                }
+                },
             ],
             attributes: [
                 ['id', 'id_author'],
@@ -79,16 +81,16 @@ IAuthorGettingRepository {
     public async list(): Promise<IAuthorListingResponse> {
         let response = await this.authorModel.findAll({
             attributes: [
-              ['id', 'id_author'],
-              'firstname',
-              'lastname',
-              [Sequelize.fn('COUNT', Sequelize.col('db_books.dbAuthorId')), 'booksCount'],
+                ['id', 'id_author'],
+                'firstname',
+                'lastname',
+                [Sequelize.fn('COUNT', Sequelize.col('db_books.dbAuthorId')), 'booksCount'],
             ],
             include: [
                 {
                     model: this.bookModel,
                     attributes: [],
-                }
+                },
             ],
             group: ['db_authors.id'],
             raw: true,
@@ -97,6 +99,6 @@ IAuthorGettingRepository {
         return {
             rows: response,
             rowsCount: response.length,
-        }
+        };
     }
 }

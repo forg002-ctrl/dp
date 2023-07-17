@@ -1,11 +1,12 @@
-import { Crypto } from '@src/lib/utils/Crypto';
+import { uuid } from 'uuidv4';
 
-import { UserInputError } from '@src/lib/errors/types/UserInputError';
+import { Crypto } from '@src/ext/sdk/backend/utils/Crypto';
+import { RegExpLibrary } from '@src/ext/sdk/backend/utils/RegExpLibrary';
+
+import { UserInputError } from '@src/ext/sdk/backend/errors/types/UserInputError';
 
 import { IUserCheckingByUsername } from '@src/modules/user/UserCheckingByUsername';
 import { IUserCheckingByEmail } from '@src/modules/user/UserCheckingByEmail';
-import { RegExpLibrary } from '@src/lib/utils/RegExpLibrary';
-import { uuid } from 'uuidv4';
 
 export interface ISigningUpData {
     username: string;

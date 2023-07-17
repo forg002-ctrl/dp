@@ -1,6 +1,6 @@
 import sequelize from 'sequelize';
 
-import { Model } from '@src/lib/app/model/Model';
+import { Model } from '@src/ext/sdk/backend/storage/postgresql/model/Model';
 
 export const AuthorModel = new Model({
     tableName: 'db_authors',

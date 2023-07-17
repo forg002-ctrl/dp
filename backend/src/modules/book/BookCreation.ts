@@ -1,6 +1,7 @@
+import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
+
 import { IGenreGetting } from '@src/modules/genre/GenreGetting';
 import { IAuthorGetting } from '@src/modules/author/AuthorGetting';
-import { NotFoundError } from '@src/lib/errors/types/NotFoundError';
 
 export interface IBookCreationData {
     id_genre: string;

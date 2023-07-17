@@ -1,6 +1,6 @@
-import { Crypto } from '@src/lib/utils/Crypto';
+import { Crypto } from '@src/ext/sdk/backend/utils/Crypto';
 
-import { UserInputError } from '@src/lib/errors/types/UserInputError';
+import { UserInputError } from '@src/ext/sdk/backend/errors/types/UserInputError';
 
 import { IUserGettingByUsername } from '@src/modules/user/UserGettingByUsername';
 import { IAccessTokenSigning } from '@src/modules/token/AccessTokenSigning';

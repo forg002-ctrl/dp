@@ -1,8 +1,8 @@
 import { Model, ModelCtor, Sequelize } from 'sequelize';
 
-import { NotFoundError } from '@src/lib/errors/types/NotFoundError';
+import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
 
-import { Database } from '@src/lib/app/Database';
+import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 
 import { IGenreCreationRepoData, IGenreCreationRepository, IGenreCreationResponse } from '@src/modules/genre/GenreCreation';
 import { IGenreGettingOptions, IGenreGettingRepository, IGenreGettingResponse } from '@src/modules/genre/GenreGetting';
@@ -16,12 +16,14 @@ IGenreGettingRepository {
     private bookModel: ModelCtor<Model<any, any>>;
 
     public constructor() {
-        let genreModel = Database.GetInstance().getModel('genres');
+        let postgresqlClient = PostgresqlClient.GetInstance();
+
+        let genreModel = postgresqlClient.getModel('genres');
         if (!genreModel) {
             throw new Error(`Genre model doesn't exist`);
         }
 
-        let bookModel = Database.GetInstance().getModel('books');
+        let bookModel = postgresqlClient.getModel('books');
         if (!bookModel) {
             throw new Error(`Genre model doesn't exist`);
         }
@@ -46,15 +48,15 @@ IGenreGettingRepository {
                 ['id', 'id_genre'],
                 'name',
                 [Sequelize.fn('COUNT', Sequelize.col('db_books.dbGenreId')), 'booksCount'],
-                ],
-                include: [
-                    {
-                        model: this.bookModel,
-                        attributes: [],
-                    }
-                ],
-                group: ['db_genres.id'],
-                raw: true,
+            ],
+            include: [
+                {
+                    model: this.bookModel,
+                    attributes: [],
+                },
+            ],
+            group: ['db_genres.id'],
+            raw: true,
         }) as unknown as IGenreGettingResponse | null;
         if (!response) {
             throw new NotFoundError('Genre was not found');
@@ -70,15 +72,15 @@ IGenreGettingRepository {
     public async list(): Promise<IGenreListingResponse> {
         let response = await this.genreModel.findAll({
             attributes: [
-              ['id', 'id_genre'],
-              'name',
-              [Sequelize.fn('COUNT', Sequelize.col('db_books.dbGenreId')), 'booksCount'],
+                ['id', 'id_genre'],
+                'name',
+                [Sequelize.fn('COUNT', Sequelize.col('db_books.dbGenreId')), 'booksCount'],
             ],
             include: [
                 {
                     model: this.bookModel,
                     attributes: [],
-                }
+                },
             ],
             group: ['db_genres.id'],
             raw: true,
@@ -87,6 +89,6 @@ IGenreGettingRepository {
         return {
             rows: response,
             rowsCount: response.length,
-        }
+        };
     }
 }

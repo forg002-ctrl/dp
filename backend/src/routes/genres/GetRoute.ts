@@ -1,10 +1,10 @@
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 import { Request, Response } from 'express';
 
 import {
     routeDescription,
     IResponseBody,
-} from '@src/ext/shared/routes//genres/GetRouteDescription';
+} from '@src/ext/shared/services/backend/routes//genres/GetRouteDescription';
 
 import { GenreListing } from '@src/modules/genre/GenreListing';
 import { GenreRepository } from '@src/modules/genre/repository/GenreRepository';

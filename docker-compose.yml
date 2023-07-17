@@ -34,6 +34,27 @@ services:
     volumes:
       - "./:/mnt"
     working_dir: "/mnt/frontend"
+  fs_srv:
+    image: "node:16"
+    depends_on:
+      - backend
+      - minio
+    ports:
+      - "3003:3003"
+    environment:
+      HTTP_SERVER_PORT: 3003
+      MINIO_ENDPOINT: "minio"
+      MINIO_PORT: 10780
+      MINIO_SSL: 'false'
+      MINIO_ACCESS_KEY: ${MINIO_USER}
+      MINIO_SECRET_KEY: ${MINIO_PASSWORD}
+    volumes:
+      - "./:/mnt"
+    working_dir: "/mnt/fs_srv"
+    entrypoint: "/bin/bash -c"
+    command:
+      - |
+        CI=true npm run dev || echo '`npm run dev` failed'
   database:
     image: "postgres:12"
     ports:
@@ -44,5 +65,22 @@ services:
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - vol-postgres:/data
+  minio:
+    hostname: "minio"
+    image: "minio/minio:latest"
+    restart: 'no'
+    expose:
+        - "9300"
+        - "9301"
+    ports:
+        - 9301:9301
+    command: 
+      server http://minio/data --console-address ":9001" --address ":10780"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+    volumes:
+      - vol-minio:/data
 volumes:
   vol-postgres:
+  vol-minio:

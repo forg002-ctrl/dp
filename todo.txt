@@ -3,6 +3,15 @@ FRONTEND
 1) component for error handling
 2) component for 404 page
 3) change localhost at the useFetch hook to .env variable
+4) setup auto refactoring of the code
 
 BACKEND
 --------
+1) check ids type(stirng/number)
+2) FS
+3) think about the tests with jest
+
+ALL
+--------
+1) setup eslint
+2) check packages

@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 
 import { routeDescription,
     IRequestBody,
     IResponseBody
-} from '@src/ext/shared/routes//author/PostRouteDescription';
+} from '@src/ext/shared/services/backend/routes//author/PostRouteDescription';
 
 import { AuthorCreation } from '@src/modules/author/AuthorCreation';
 import { AuthorRepository } from '@src/modules/author/repository/AuthorRepository';

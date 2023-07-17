@@ -1,6 +1,9 @@
-import { ErrorHandler } from '@src/lib/errors/ErorrHandler';
-import { AuthError } from '@src/lib/errors/types/AuthError';
-import { JwtService } from '@src/lib/utils/JwtService';
+import { ErrorHandler } from '@src/ext/sdk/backend/errors/ErorrHandler';
+import { AuthError } from '@src/ext/sdk/backend/errors/types/AuthError';
+
+import { Config } from '@src/lib/Config';
+
+import { JwtService } from '@src/ext/sdk/backend/utils/JwtService';
 
 import { ISessionGetting } from '@src/modules/session/SessionGetting';
 import { IUserGetting } from '@src/modules/user/UserGetting';
@@ -44,7 +47,7 @@ export class AccessTokenRefreshing implements IAccessTokenRefreshing {
 
         let decodedData: IJwtTokenPayload;
         try {
-            decodedData = this.jwt.verifyJwt(data.refreshToken, 'REFRESH_TOKEN_PUBLIC_KEY') as unknown as IJwtTokenPayload;
+            decodedData = this.jwt.verifyJwt(data.refreshToken, 'REFRESH_TOKEN_PUBLIC_KEY', Config.ACCESS_TOKEN_PUBLIC_KEY, Config.REFRESH_TOKEN_PUBLIC_KEY) as unknown as IJwtTokenPayload;
             if (!decodedData.id_session) {
                 throw new AuthError();
             }

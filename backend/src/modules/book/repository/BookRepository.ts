@@ -1,14 +1,14 @@
-import { Model, ModelCtor, Op, Sequelize, col } from 'sequelize';
+import { Model, ModelCtor, Sequelize, col } from 'sequelize';
 
-import { NotFoundError } from '@src/lib/errors/types/NotFoundError';
+import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
 
-import { Database } from '@src/lib/app/Database';
+import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 
-import { IBookCreationRepoData, IBookCreationRepository, IBookCreationResponse } from "@src/modules/book/BookCreation";
+import { IBookCreationRepoData, IBookCreationRepository, IBookCreationResponse } from '@src/modules/book/BookCreation';
 import { IBookListingRepository, IBookListingResponse, IListBook, IListBookRepositoryParams } from '@src/modules/book/BookListing';
 import { IBookGettingRepository, IBookGettingResponse, IBookGettingOptions } from '@src/modules/book/BookGetting';
 
-export class BookRepository implements 
+export class BookRepository implements
 IBookCreationRepository,
 IBookListingRepository,
 IBookGettingRepository {
@@ -17,17 +17,19 @@ IBookGettingRepository {
     private genreModel: ModelCtor<Model<any, any>>;
 
     public constructor() {
-        let bookModel = Database.GetInstance().getModel('books');
+        let postgresqlClient = PostgresqlClient.GetInstance();
+
+        let bookModel = postgresqlClient.getModel('books');
         if (!bookModel) {
             throw new Error(`Book Model doesn't exist`);
         }
 
-        let authorModel = Database.GetInstance().getModel('authors');
+        let authorModel = postgresqlClient.getModel('authors');
         if (!authorModel) {
             throw new Error(`Author Model doesn't exist`);
         }
 
-        let genreModel = Database.GetInstance().getModel('genres');
+        let genreModel = postgresqlClient.getModel('genres');
         if (!authorModel) {
             throw new Error(`Genre Model doesn't exist`);
         }
@@ -83,10 +85,10 @@ IBookGettingRepository {
         return {
             rows: response,
             rowsCount: response.length,
-        }
+        };
     }
 
-    public async get(options: IBookGettingOptions): Promise<IBookGettingResponse>{
+    public async get(options: IBookGettingOptions): Promise<IBookGettingResponse> {
         let response = await this.bookModel.findByPk(options.id_book, {
             include: [
                 {

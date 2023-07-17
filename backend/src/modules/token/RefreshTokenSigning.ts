@@ -1,4 +1,6 @@
-import { JwtService } from '@src/lib/utils/JwtService';
+import { Config } from '@src/lib/Config';
+
+import { JwtService } from '@src/ext/sdk/backend/utils/JwtService';
 
 import { ISessionCreation } from '@src/modules/session/SessionCreation';
 
@@ -27,7 +29,7 @@ export class RefreshTokenSigning implements IRefreshTokenSigning {
             id_user: data.id_user,
         });
 
-        return this.jwt.signJwt(session, 'REFRESH_TOKEN_PRIVATE_KEY', '30d');
+        return this.jwt.signJwt(session, 'REFRESH_TOKEN_PRIVATE_KEY', '30d', Config.ACCESS_TOKEN_PRIVATE_KEY, Config.REFRESH_TOKEN_PRIVATE_KEY);
     }
 
     private validateData(data: IRefreshTokenSigningData): void {

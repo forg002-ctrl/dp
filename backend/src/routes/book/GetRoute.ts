@@ -1,11 +1,11 @@
-import { Route } from '@src/lib/app/route/Route';
+import { Route } from '@src/ext/sdk/backend/app/route/Route';
 import { Request, Response } from 'express';
 
 import {
     routeDescription,
     IRequestParams,
     IResponseBody,
-} from '@src/ext/shared/routes//book/GetRouteDescription';
+} from '@src/ext/shared/services/backend/routes/book/GetRouteDescription';
 
 import { BookGetting } from '@src/modules/book/BookGetting';
 import { BookRepository } from '@src/modules/book/repository/BookRepository';
