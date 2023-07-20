@@ -1,6 +1,5 @@
 import { Route } from '@src/ext/sdk/backend/app/route/Route';
 import { Request, Response } from 'express';
-import busboy from 'busboy';
 
 import { routeDescription,
     IRequestParams,

@@ -1,5 +1,5 @@
 import { Readable } from 'stream';
-import { Client, CopySourceOptions } from 'minio';
+import { Client } from 'minio';
 
 export interface IMinioClientOptions {
     bucket_name: string;

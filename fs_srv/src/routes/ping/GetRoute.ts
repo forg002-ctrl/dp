@@ -13,7 +13,6 @@ export class GetPingRoute extends Route {
     }
 
     public async main(req: Request, res: Response): Promise<void> {
-        console.log(req.files);
         res.status(200).json(<IResponseBody>{ response: 'pong' });
     }
 }
