@@ -2,8 +2,7 @@ import express, { Express, Router, Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
-import fileupload from 'express-fileupload';
+import bodyParser from 'body-parser'
 
 import { Documentation } from '../swagger/Documentation';
 
@@ -28,12 +27,10 @@ export class Server {
         this.swaggerDocumention = options.swaggerDocumention;
         this.app = express();
         this.app.use(cors());
-        this.app.use(fileupload());
-        this.app.use(express.static("files"));
-        this.app.use(express.json());
         this.app.use(cookieParser());
         this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: false }));
 
         // for (let middleware of options.middlewares) {
         //     this.app.use('/', middleware);

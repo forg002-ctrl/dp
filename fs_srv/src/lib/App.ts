@@ -1,6 +1,7 @@
 import { Config } from '@src/lib/Config';
 
 import { Server } from '@src/ext/sdk/backend/server/Server';
+import { MinioClient } from '@src/ext/sdk/backend/storage/minio/MinioClient';
 import { Route } from '@src/ext/sdk/backend/app/route/Route';
 import { Documentation } from '@src/ext/sdk/backend/swagger/Documentation';
 
@@ -10,18 +11,13 @@ export interface IAppRunOptions {
 
 export class App {
     private server: Server;
-    // private database: Database;
 
     public async run(options: IAppRunOptions): Promise<void> {
         await this.initServer(options.routes);
         if (!this.server || !(this.server instanceof Server)) {
             throw new Error('Server not ready');
         }
-
-        // await this.initDatabase(options.models, options.associations);
-        // if (!this.database || !(this.database instanceof Database)) {
-        //     throw new Error('Database not ready');
-        // }
+        await this.initFileStorage();
 
         this.server.start();
     }
@@ -46,22 +42,19 @@ export class App {
         }
     }
 
-    // private async initDatabase(models: Model[], associations: Association[]): Promise<void> {
-    //     Database.Init({
-    //         db_name: Config.DB_NAME,
-    //         db_user: Config.DB_USER,
-    //         db_password: Config.DB_PASSWORD,
-    //         db_host: Config.DB_HOST,
-    //     });
-    //     this.database = Database.GetInstance();
-    //     for (let model of models) {
-    //         model.registerModel(this.database);
-    //     }
+    private async initFileStorage(): Promise<void> {
+        await MinioClient.Init({
+            minio_endpoint: Config.MINIO_ENDPOINT,
+            minio_port: Config.MINIO_PORT,
+            minio_SSL: Config.MINIO_SSL,
+            minio_access_key: Config.MINIO_ACCESS_KEY,
+            minio_secret_key: Config.MINIO_SECRET_KEY,
+            bucket_name: Config.BUCKET_NAME,
+        });
 
-    //     for (let association of associations) {
-    //         association.registerAssociation(this.database);
-    //     }
-
-    //     await this.database.syncTables();
-    // }
+        let minioClient = MinioClient.GetInstance();
+        if (!minioClient || !(minioClient instanceof MinioClient)) {
+            throw new Error('File Storage not ready');
+        }
+    }
 }

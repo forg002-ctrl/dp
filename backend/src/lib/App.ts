@@ -17,18 +17,13 @@ export interface IAppRunOptions {
 
 export class App {
     private server: Server;
-    private postgresqlClient: PostgresqlClient;
 
     public async run(options: IAppRunOptions): Promise<void> {
         await this.initServer(options.routes);
         if (!this.server || !(this.server instanceof Server)) {
             throw new Error('Server not ready');
         }
-
         await this.initDatabase(options.models, options.associations);
-        if (!this.postgresqlClient || !(this.postgresqlClient instanceof PostgresqlClient)) {
-            throw new Error('Database not ready');
-        }
 
         this.server.start();
     }
@@ -68,15 +63,18 @@ export class App {
             db_password: Config.DB_PASSWORD,
             db_host: Config.DB_HOST,
         });
-        this.postgresqlClient = PostgresqlClient.GetInstance();
+
+        let postgresqlClient = PostgresqlClient.GetInstance();
+        if (!postgresqlClient || !(postgresqlClient instanceof PostgresqlClient)) {
+            throw new Error('Database not ready');
+        }
+
         for (let model of models) {
-            model.registerModel(this.postgresqlClient);
+            model.registerModel(postgresqlClient);
         }
-
         for (let association of associations) {
-            association.registerAssociation(this.postgresqlClient);
+            association.registerAssociation(postgresqlClient);
         }
-
-        await this.postgresqlClient.syncTables();
+        await postgresqlClient.syncTables();
     }
 }

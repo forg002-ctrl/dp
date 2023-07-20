@@ -17,7 +17,7 @@ export const BookModel = new Model({
         info: {
             type: sequelize.TEXT,
         },
-        imageName: {
+        uid_file: {
             type: sequelize.STRING,
             allowNull: false,
         },

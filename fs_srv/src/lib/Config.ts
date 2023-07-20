@@ -5,6 +5,7 @@ export interface IConfigOptions {
     minio_ssl: boolean;
     minio_access_key: string;
     minio_secret_key: string;
+    bucket_name: string;
 }
 
 export class Config {
@@ -16,6 +17,7 @@ export class Config {
     public static MINIO_SSL: boolean;
     public static MINIO_ACCESS_KEY: string;
     public static MINIO_SECRET_KEY: string;
+    public static BUCKET_NAME: string;
 
     private constructor(options: IConfigOptions) {
         Config.HTTP_SERVER_PORT = options.http_server_port;
@@ -24,6 +26,7 @@ export class Config {
         Config.MINIO_SSL = options.minio_ssl;
         Config.MINIO_ACCESS_KEY = options.minio_access_key;
         Config.MINIO_SECRET_KEY = options.minio_secret_key;
+        Config.BUCKET_NAME = options.bucket_name;
     }
 
     public static Init(options: IConfigOptions): void {

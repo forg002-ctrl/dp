@@ -1,4 +1,5 @@
 import moment from 'moment';
+import multer from 'multer';
 import { Response, Request, Router, NextFunction } from 'express';
 
 import { ErrorHandler } from '../../errors/ErorrHandler';
@@ -10,6 +11,9 @@ import { IRouteDescription } from './description/interfaces/IRouteDescription';
 export interface IRouteOptions {
     description: IRouteDescription;
 }
+
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 export abstract class Route {
     private description: IRouteDescription;
@@ -23,9 +27,15 @@ export abstract class Route {
 
         switch (this.description.httpMethod) {
             case 'POST': {
-                router.post(this.description.endpoint, async (req: Request, res: Response, next: NextFunction) => {
-                    await this.execute(req, res);
-                });
+                if (this.description.upload) {
+                    router.post(this.description.endpoint, upload.single('file'), async (req: Request, res: Response, next: NextFunction) => {
+                        await this.execute(req, res);
+                    });
+                } else {
+                    router.post(this.description.endpoint, async (req: Request, res: Response, next: NextFunction) => {
+                        await this.execute(req, res);
+                    });
+                }
                 break;
             }
             case 'GET': {

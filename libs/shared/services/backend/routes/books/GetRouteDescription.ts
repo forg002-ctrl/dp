@@ -23,7 +23,7 @@ export interface IListBook {
     genre_name: string;
     title: string;
     price: number;
-    imageName: string;
+    uid_file: string;
 }
 
 export interface IResponseBody {
@@ -60,7 +60,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
                     price: {
                         type: 'number',
                     },
-                    imageName: {
+                    uid_file: {
                         type: 'string',
                     },
                 },
@@ -72,7 +72,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
                     'genre_name',
                     'title',
                     'price',
-                    'imageName',
+                    'uid_file',
                 ],
             }
         },

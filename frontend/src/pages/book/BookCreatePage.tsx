@@ -2,8 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useFetch } from "hooks/useFetch";
 
-import { IResponseBody as IListAuthorsResponse, IListAuthor } from 'ext/shared/routes/authors/GetRouteDescription';
-import { IResponseBody as IListGenresResponse, IListGenre } from 'ext/shared/routes/genres/GetRouteDescription';
+import { IResponseBody as IListAuthorsResponse, IListAuthor } from 'ext/shared/services/backend/routes/authors/GetRouteDescription';
+import { IResponseBody as IListGenresResponse, IListGenre } from 'ext/shared/services/backend/routes/genres/GetRouteDescription';
 
 import { Loader } from 'components/UI/loader/Loader';
 import { Select } from "components/UI/select/Select";
@@ -41,6 +41,15 @@ export const BookCreatePage = () => {
         }));
     };
 
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                'file': event.target.files[0],
+              }));
+        }
+    }
+
     const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -48,14 +57,18 @@ export const BookCreatePage = () => {
         if (!formData.file) {
             throw new Error('File is missing');
         }
-        formDataToSend.append('file', formData.file);
         formDataToSend.append('title', formData.title);
         formDataToSend.append('price', formData.price.toString());
         formDataToSend.append('info', formData.info);
         formDataToSend.append('id_author', formData.id_author);
+        formDataToSend.append('file', formData.file);
         formDataToSend.append('id_genre', formData.id_genre);
 
-        let response = await axios.post('http://localhost:3001/book', formDataToSend);
+        let response = await axios.post('http://localhost:3001/book', formDataToSend, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        });
         if (response.status !== 201) {
             setPostError(response.data);
         }
@@ -75,6 +88,7 @@ export const BookCreatePage = () => {
                     <form
                         className="bg-white rounded shadow-lg p-4 px-4 md:p-8"
                         onSubmit={handleOnSubmit}
+                        encType="multipart/form-data"
                     >
                         <h2 className="flex justify-center text-2xl mb-4">Book Creation Form</h2>
                         <div className="mb-5">
@@ -130,7 +144,7 @@ export const BookCreatePage = () => {
                             <label className="block mb-1">Image</label>
                             <ImageLoader 
                                 name="file"
-                                onImageLoad={handleChange}
+                                onImageLoad={handleFileChange}
                             />
                         </div>
                         <button

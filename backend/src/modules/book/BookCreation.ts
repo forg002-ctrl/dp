@@ -2,6 +2,7 @@ import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
 
 import { IGenreGetting } from '@src/modules/genre/GenreGetting';
 import { IAuthorGetting } from '@src/modules/author/AuthorGetting';
+import { IFileSaving } from '@src/modules/file/FileSaving';
 
 export interface IBookCreationData {
     id_genre: string;
@@ -9,16 +10,16 @@ export interface IBookCreationData {
     title: string;
     price: number;
     info: string;
-    imageName: string;
+    file: Express.Multer.File;
 }
 
 export interface IBookCreationRepoData {
     id_genre: string;
     id_author: string;
+    uid_file: string;
     title: string;
     price: number;
     info: string;
-    imageName: string;
 }
 
 export interface IBookCreationResponse {
@@ -37,15 +38,18 @@ export class BookCreation implements IBookCreation {
     private repo: IBookCreationRepository;
     private genreGetting: IGenreGetting;
     private authorGetting: IAuthorGetting;
+    private fileSaving: IFileSaving;
 
     public constructor(options: {
         repo: IBookCreationRepository;
         genreGetting: IGenreGetting;
         authorGetting: IAuthorGetting;
+        fileSaving: IFileSaving;
     }) {
         this.repo = options.repo;
         this.genreGetting = options.genreGetting;
         this.authorGetting = options.authorGetting;
+        this.fileSaving = options.fileSaving;
     }
 
     public async execute(data: IBookCreationData): Promise<IBookCreationResponse> {
@@ -65,13 +69,17 @@ export class BookCreation implements IBookCreation {
             throw new NotFoundError('Author Not Found');
         }
 
+        let response = await this.fileSaving.execute({
+            file: data.file,
+        });
+
         return await this.repo.create({
             id_genre: data.id_genre,
             id_author: data.id_author,
             title: data.title,
             price: data.price,
             info: data.info,
-            imageName: data.imageName,
+            uid_file: response.uid_file,
         });
     }
 
@@ -91,7 +99,7 @@ export class BookCreation implements IBookCreation {
         if (!data.info) {
             throw new Error('Info Missing');
         }
-        if (!data.imageName) {
+        if (!data.file) {
             throw new Error('Image Missing');
         }
     }

@@ -10,7 +10,7 @@ export interface IBookGettingResponse {
     genre_name: string;
     title: string;
     price: number;
-    imageName: string;
+    uid_file: string;
     info: string;
 }
 

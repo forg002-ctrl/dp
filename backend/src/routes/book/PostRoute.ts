@@ -28,13 +28,10 @@ export class PostBookRoute extends Route {
     public async main(req: Request, res: Response): Promise<void> {
         let body = req.body as IRequestBody;
 
-        if (!req.files || !req.files.file) {
-            throw new Error('No file passed');
+        let file = req.file;
+        if (!file) {
+            throw new Error('No file was found');
         }
-        let file = req.files.file;
-
-        let oFileSaving = new FileSaving();
-        let fileName = oFileSaving.saveFile(file);
 
         let oBookCreation = new BookCreation({
             repo: new BookRepository(),
@@ -44,6 +41,9 @@ export class PostBookRoute extends Route {
             authorGetting: new AuthorGetting({
                 repo: new AuthorRepository(),
             }),
+            fileSaving: new FileSaving({
+                fsSrvHost: 'http://localhost:3003'
+            }),
         });
         let response = await oBookCreation.execute({
             id_genre: body.id_genre,
@@ -51,7 +51,7 @@ export class PostBookRoute extends Route {
             title: body.title,
             price: body.price,
             info: body.info,
-            imageName: fileName,
+            file: file,
         });
 
         res.status(201).json(<IResponseBody>response);

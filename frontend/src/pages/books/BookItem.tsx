@@ -16,7 +16,7 @@ export const BookItem = (props: BookItemProps) => {
     return (
         <div className='rounded shadow-lg shadow-gray-400 bg-[#F3F8F2] duration-300 hover:-translate-y-1' onClick={() => handelRedirectToDetailPage(props.book.id_book)}>
             <figure>
-                <img className="object-cover h-64 mx-auto" src={props.book.imageName} alt="" />
+                <img className="object-cover h-64 mx-auto" src={`http://localhost:3003/file/${props.book.uid_file}`} alt="" />
                 <hr className='border-2 border-[#39A2AE]' />
                 <figcaption className='p-4'>
                     <p className='text-xl font-bold leading-relaxed'>{props.book.title}</p>

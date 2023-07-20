@@ -46,7 +46,7 @@ IBookGettingRepository {
             title: data.title,
             price: data.price,
             info: data.info,
-            imageName: data.imageName,
+            uid_file: data.uid_file,
         });
 
         return {
@@ -77,7 +77,7 @@ IBookGettingRepository {
                 [col('db_genre.name'), 'genre_name'],
                 'title',
                 'price',
-                'imageName',
+                'uid_file',
             ],
             raw: true,
         }) as unknown as IListBook[];
@@ -108,7 +108,7 @@ IBookGettingRepository {
                 [col('db_genre.name'), 'genre_name'],
                 'title',
                 'price',
-                'imageName',
+                'uid_file',
                 'info',
             ],
             raw: true,
@@ -125,7 +125,7 @@ IBookGettingRepository {
             genre_name: response.genre_name,
             title: response.title,
             price: response.price,
-            imageName: response.imageName,
+            uid_file: response.uid_file,
             info: response.info,
         };
     }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFetch } from 'hooks/useFetch';
 
-import { IListBook as IBook, IResponseBody } from 'ext/shared/routes/books/GetRouteDescription';
+import { IListBook as IBook, IResponseBody } from 'ext/shared/services/backend/routes/books/GetRouteDescription';
 
 import { BookItem } from 'pages/books/BookItem';
 import { Loader } from 'components/UI/loader/Loader';
@@ -23,7 +23,7 @@ export const BookList = () => {
     };
 
     if (error) {
-        return <p>Error</p>
+        return <p>{error.message}</p>
     }
     return(
         <div className="p-8">

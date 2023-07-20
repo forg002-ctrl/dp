@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useFetch } from "hooks/useFetch";
 
-import { IResponseBody as IBook } from 'ext/shared/routes/book/GetRouteDescription';
+import { IResponseBody as IBook } from 'ext/shared/services/backend/routes/book/GetRouteDescription';
 
 import { Loader } from 'components/UI/loader/Loader';
 
@@ -11,7 +11,7 @@ export const BookDetailPage = () => {
     const { data, error } = useFetch<IBook>(`http://localhost:3001/book/${id_book}`);
 
     if (error) {
-        return <p>Error</p>
+        return <p>{error.message}</p>
     }
     return (!data ?
             <Loader />
@@ -19,7 +19,7 @@ export const BookDetailPage = () => {
             <div className="w-full my-12 flex flex-col justify-center">
                 <div className="max-w-[1240px] mx-auto grid sm:grid-cols-2">
                     <div className="w-11/12 border-2 border-[#39A2AE] bg-[#F3F8F2]">
-                        <img className="w-3/4 my-8 mx-auto" src={`http://localhost:3002/${data.imageName}`} alt="" />
+                        <img className="w-3/4 my-8 mx-auto" src={`http://localhost:3003/file/${data.uid_file}`} alt="" />
                     </div>
                     <div className="flex flex-col justify-center">
                         <p className='text-4xl font-bold pb-4'>{data.title}</p>

@@ -15,3 +15,11 @@ ALL
 --------
 1) setup eslint
 2) check packages
+3) remoteService or RabitMQ
+4) services hosts have to be gotten from the env
+
+
+FS
+--------
+1) Mime verification
+2) Authentication for POST

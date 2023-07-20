@@ -12,83 +12,55 @@ import {
 } from '../../../../lib/routing/description/ResponseDefinition';
 
 export interface IRequestBody {
-    id_genre: string;
-    id_author: string;
-    title: string;
-    price: number;
-    info: string;
+    file: string;
 }
 
 export interface IResponseBody {
-    id_book: string;
+    uid_file: string;
 }
 
 let requestBodySchema: JSONSchemaType<IRequestBody> = {
     type: 'object',
     properties: {
-        id_genre: {
-            type: 'string',
-        },
-        id_author: {
-            type: 'string',
-        },
-        title: {
-            type: 'string',
-        },
-        price: {
-            type: 'number',
-        },
-        info: {
+        file: {
             type: 'string',
         },
     },
     required: [
-        'id_genre',
-        'id_author',
-        'title',
-        'price',
-        'info',
+        'file',
     ],
 };
 
 let responseBodySchema: JSONSchemaType<IResponseBody> = {
     type: 'object',
     properties: {
-        id_book: {
+        uid_file: {
             type: 'string',
         },
     },
     required: [
-        'id_book',
+        'uid_file',
     ],
 };
 
 let routeDefinition: IRouteDefinition = {
-    tags: ['Book'],
-    summary: 'POST book',
-    description: 'Route for book creating',
+    tags: ['File'],
+    summary: 'POST file',
+    description: 'Route for uploading file',
     parameters: [
-        {
-            name: 'authorization',
-            in: 'header',
-            required: true,
-            description: 'Bearer access token',
-            schema: {
-                type: 'string',
-            },
-        },
+        //TODO: Authorization
     ],
     requestBody: {
         content: {
-            'application/json': {
+            'application/octet-stream': {
                 schema: requestBodySchema,
             },
         },
     },
     responses: {
-        201: Generate201ResponseSchema('Book created successfully', responseBodySchema),
+        201: Generate201ResponseSchema('File uploaded successfully', responseBodySchema),
         400: Generate400ResponseSchema('Bad Request'),
-        401: Generate401ResponseSchema('Unauthorized'),
+        // 401: Generate401ResponseSchema('Unauthorized'),
         404: Generate404ResponseSchema('Not Found'),
         500: Generate500ResponseSchema('Internal server error'),
     },
@@ -96,8 +68,8 @@ let routeDefinition: IRouteDefinition = {
 
 export const routeDescription: IRouteDescription = {
     httpMethod: 'POST',
-    endpoint: '/book',
+    endpoint: '/file',
     upload: true,
     definition: routeDefinition,
-    authRequired: true,
+    authRequired: false, //TODO: Authorization
 };

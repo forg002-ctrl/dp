@@ -2,10 +2,12 @@ version: "3.8"
 services:
   backend:
     image: "node:16"
+    networks:
+      - microservices-net
     depends_on:
       - database
     ports:
-      - "3001:3001"
+      - 3001:3001
     environment:
       HTTP_SERVER_PORT: 3001
       DB_HOST: "database"
@@ -27,27 +29,32 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    networks:
+      - microservices-net
     depends_on:
       - backend
     ports:
-      - "3002:3002"
+      - 3002:3002
     volumes:
       - "./:/mnt"
     working_dir: "/mnt/frontend"
   fs_srv:
     image: "node:16"
+    networks:
+      - microservices-net
     depends_on:
       - backend
       - minio
     ports:
-      - "3003:3003"
+      - 3003:3003
     environment:
       HTTP_SERVER_PORT: 3003
       MINIO_ENDPOINT: "minio"
-      MINIO_PORT: 10780
-      MINIO_SSL: 'false'
+      MINIO_PORT: 9000
+      MINIO_SSL: "false"
       MINIO_ACCESS_KEY: ${MINIO_USER}
       MINIO_SECRET_KEY: ${MINIO_PASSWORD}
+      BUCKET_NAME: ${MINIO_BUCKET_NAME}
     volumes:
       - "./:/mnt"
     working_dir: "/mnt/fs_srv"
@@ -57,8 +64,10 @@ services:
         CI=true npm run dev || echo '`npm run dev` failed'
   database:
     image: "postgres:12"
+    networks:
+      - microservices-net
     ports:
-      - "5432:5432"
+      - 5432:5432
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -68,14 +77,16 @@ services:
   minio:
     hostname: "minio"
     image: "minio/minio:latest"
-    restart: 'no'
+    networks:
+      - microservices-net
     expose:
-        - "9300"
-        - "9301"
+      - 9000
+      - 9001
     ports:
-        - 9301:9301
+      - 9000:9000
+      - 9001:9001
     command: 
-      server http://minio/data --console-address ":9001" --address ":10780"
+      server --console-address ":9001" /data
     environment:
       MINIO_ROOT_USER: ${MINIO_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
@@ -84,3 +95,6 @@ services:
 volumes:
   vol-postgres:
   vol-minio:
+networks:
+  microservices-net: 
+    external: true

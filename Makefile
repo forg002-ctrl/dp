@@ -1,6 +1,6 @@
 install-base:
 	cp .example.env .env
-	docker network create tasknet | :
+	docker network create microservices-net | :
 
 install-backend:
 	docker-compose run --rm backend "npm install"
@@ -11,7 +11,7 @@ install-frontend:
 install-fs_srv:
 	docker-compose run --rm fs_srv "npm install"
 
-install: install-base install-backend install-frontend
+install: install-base install-backend install-frontend install-fs_srv
 
 start:
 	docker-compose up --remove-orphans -d database backend frontend minio fs_srv

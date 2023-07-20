@@ -10,4 +10,5 @@ export interface IRouteDescription {
     requestBodySchema?: SchemaObject;
     definition: IRouteDefinition;
     authRequired: boolean;
+    upload?: boolean;
 }

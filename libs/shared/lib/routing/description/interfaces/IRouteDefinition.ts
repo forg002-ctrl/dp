@@ -7,6 +7,7 @@ interface ISchemaBody {
 export interface IRequestContent {
     content: {
         'application/json'?: ISchemaBody;
+        'application/octet-stream'?: ISchemaBody;
     };
 }
 

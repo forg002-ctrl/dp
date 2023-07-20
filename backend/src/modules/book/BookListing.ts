@@ -6,7 +6,7 @@ export interface IListBook {
     genre_name: string;
     title: string;
     price: number;
-    imageName: string;
+    uid_file: string;
 }
 
 export interface IListBookParams {

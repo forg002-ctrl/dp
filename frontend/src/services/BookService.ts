@@ -29,7 +29,7 @@ export interface IGetBook {
 
 export class BookService {
     static async listBooks(search: string): Promise<IListReponse> {
-        let response = await axios.get(`http://localhost:3001/books?search=${search}`);
+        let response = await axios.get(`backend/books?search=${search}`);
         if (response.status !== 200) {
             throw new Error('Failed to fetch the data from backend');
         }
@@ -38,7 +38,7 @@ export class BookService {
     }
 
     static async getBook(id_book: string): Promise<IGetBook> {
-        let response = await axios.get(`http://localhost:3001/book/${id_book}`);
+        let response = await axios.get(`backend/book/${id_book}`);
         if (response.status !== 200) {
             throw new Error('Failed to fetch the data from backend');
         }
