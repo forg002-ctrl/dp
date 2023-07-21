@@ -38,9 +38,9 @@ Frontend Roots:
     ```
 2) Book Creation
     ```bash
-    http://localhost:3003/book
+    http://localhost:3002/book
     ```
 3) Book's Detail Page
     ```bash
-    http://localhost:3003/book/:id_book
+    http://localhost:3002/book/:id_book
     ```
