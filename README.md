@@ -18,3 +18,29 @@ Stop the project:
 ```bash
 make stop
 ```
+
+
+API documentation:
+
+1) Backend
+    ```bash
+    http://localhost:3001/swagger
+    ```
+2) File System Service
+    ```bash
+    http://localhost:3003/swagger
+    ```
+
+Frontend Roots:
+1) Books List
+    ```bash
+    http://localhost:3002/books
+    ```
+2) Book Creation
+    ```bash
+    http://localhost:3003/book
+    ```
+3) Book's Detail Page
+    ```bash
+    http://localhost:3003/book/:id_book
+    ```
