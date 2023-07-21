@@ -4,7 +4,7 @@ import { Route } from '@src/ext/sdk/backend/app/route/Route';
 
 import { routeDescription,
     IRequestBody,
-    IResponseBody
+    IResponseBody,
 } from '@src/ext/shared/services/backend/routes//author/PostRouteDescription';
 
 import { AuthorCreation } from '@src/modules/author/AuthorCreation';

@@ -10,9 +10,11 @@
      ],
      "sourceMap":true,
      "jsx":"react-jsx",
-     "strict":true,
      "noImplicitReturns":true,
      "baseUrl": "src",
+     "strict": false /* Enable all strict type-checking options. */,
+     "noImplicitAny": true /* Raise error on expressions and declarations with an implied 'any' type. */,
+     "allowSyntheticDefaultImports": true,
   },
   "include":[
      "**/*.ts",

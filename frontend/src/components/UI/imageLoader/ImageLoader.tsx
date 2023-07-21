@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from 'react';
 type ImageLoaderProps = {
     name: string;
     onImageLoad: (event: ChangeEvent<HTMLInputElement>) => void;
+    passClearStateFunc: (childClearStateFunc: () => void) => void;
 };
 
 export const ImageLoader = (props: ImageLoaderProps) => {
@@ -21,6 +22,11 @@ export const ImageLoader = (props: ImageLoaderProps) => {
             reader.readAsDataURL(file);
         }
     };
+
+    const clearState = () => {
+        setPreviewUrl(null);
+    };
+    props.passClearStateFunc(clearState);
 
     return (
         <>

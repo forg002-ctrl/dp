@@ -71,7 +71,35 @@ export const BookCreatePage = () => {
         });
         if (response.status !== 201) {
             setPostError(response.data);
+        } else {
+            clearForm();
         }
+    };
+
+    let clearAuthorSelectState: () => void = null;
+    const assignClearAuthorSelectState = (childClearStateFunc: () => void) => {
+        clearAuthorSelectState = childClearStateFunc;
+    }
+    let clearGenreSelectState: () => void = null;
+    const assignClearGenreSelectState = (childClearStateFunc: () => void) => {
+        clearGenreSelectState = childClearStateFunc;
+    }
+    let clearImageLoaderState: () => void = null;
+    const assignClearImageLoaderState = (childClearStateFunc: () => void) => {
+        clearImageLoaderState = childClearStateFunc;
+    }
+    const clearForm = () => {
+        setFormData({
+            title: '',
+            price: 0,
+            info: '',
+            id_author: '',
+            id_genre: '',
+            file: null,
+        });
+        clearAuthorSelectState();
+        clearGenreSelectState();
+        clearImageLoaderState();
     };
 
     if (authorsResponse.error || genresResponse.error) {
@@ -124,6 +152,7 @@ export const BookCreatePage = () => {
                                     };
                                 })}
                                 onChange={handleChange}
+                                passClearStateFunc={assignClearAuthorSelectState}
                             />
                         </div>
                         <div className="mb-5">
@@ -138,6 +167,7 @@ export const BookCreatePage = () => {
                                     };
                                 })}
                                 onChange={handleChange}
+                                passClearStateFunc={assignClearGenreSelectState}
                             />
                         </div>
                         <div className="mb-5">
@@ -145,6 +175,7 @@ export const BookCreatePage = () => {
                             <ImageLoader 
                                 name="file"
                                 onImageLoad={handleFileChange}
+                                passClearStateFunc={assignClearImageLoaderState}
                             />
                         </div>
                         <button

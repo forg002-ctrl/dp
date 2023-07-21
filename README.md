@@ -34,13 +34,21 @@ API documentation:
 Frontend Roots:
 1) Books List
     ```bash
-    http://localhost:3002/books
+    http://localhost:3002/
     ```
-2) Book Creation
+2) Genre Creation
+    ```bash
+    http://localhost:3002/genre
+
+3) Author Creation
+    ```bash
+    http://localhost:3002/author
+
+4) Book Creation
     ```bash
     http://localhost:3002/book
     ```
-3) Book's Detail Page
+5) Book's Detail Page
     ```bash
     http://localhost:3002/book/:id_book
     ```

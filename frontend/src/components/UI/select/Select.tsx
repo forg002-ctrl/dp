@@ -10,6 +10,7 @@ type SelectProps = {
     placeholder: string;
     options: Option[];
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    passClearStateFunc: (childClearStateFunc: () => void) => void;
 };
 
 export const Select = (props: SelectProps) => {
@@ -21,19 +22,24 @@ export const Select = (props: SelectProps) => {
         props.onChange(event);
     };
 
-  return (
-    <select
-        value={selectedValue}
-        onChange={handleSelectChange}
-        className="block w-full py-2 px-3 border rounded-md shadow-sm bg-[#F3F8F2] focuse-visible: outline-none focus:outline-[#39A2AE] outline-offset-0"
-        name={props.name}
-    >
-        <option disabled value="">{props.placeholder}</option>
-        {props.options.map((option) => (
-            <option key={option.value} value={option.value}>
-                {option.label}
-            </option>
-        ))}
-    </select>
-  );
+    const clearState = () => {
+        setSelectedValue('');
+    };
+    props.passClearStateFunc(clearState);
+
+    return (
+        <select
+            value={selectedValue}
+            onChange={handleSelectChange}
+            className="block w-full py-2 px-3 border rounded-md shadow-sm bg-[#F3F8F2] focuse-visible: outline-none focus:outline-[#39A2AE] outline-offset-0"
+            name={props.name}
+        >
+            <option disabled value="">{props.placeholder}</option>
+            {props.options.map((option) => (
+                <option key={option.value} value={option.value}>
+                    {option.label}
+                </option>
+            ))}
+        </select>
+    );
 };
