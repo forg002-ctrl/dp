@@ -22,7 +22,6 @@ export class PostFileRoute extends Route {
             throw new Error('No file was found');
         }
 
-        console.log(file);
         let uid_file = randomUUID();
         let minioClient = MinioClient.GetInstance();
         await minioClient.writeFile(file, uid_file);

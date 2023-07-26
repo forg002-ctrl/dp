@@ -24,7 +24,6 @@ export class FileSaving implements IFileSaving {
 
     public async execute(data: IFileSavingData): Promise<IFileSavingResponse> {
         let formData = new FormData();
-        console.log(data.file.buffer);
         formData.append('file', Buffer.from(data.file.buffer), {
             filename: data.file.originalname,
             contentType: data.file.mimetype,

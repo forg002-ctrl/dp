@@ -6,12 +6,14 @@ import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/Postgr
 
 import { IGenreCreationRepoData, IGenreCreationRepository, IGenreCreationResponse } from '@src/modules/genre/GenreCreation';
 import { IGenreGettingOptions, IGenreGettingRepository, IGenreGettingResponse } from '@src/modules/genre/GenreGetting';
-import { IGenreListingRepository, IGenreListingResponse, IListGenre } from '@src/modules/genre/GenreListing';
+import { IGenresListingRepository, IGenresListingResponse, IListGenre } from '@src/modules/genre/GenresListing';
+import { IGenreRemovingOptions, IGenreRemovingRepository } from '@src/modules/genre/GenreRemoving';
 
 export class GenreRepository implements
 IGenreCreationRepository,
-IGenreListingRepository,
-IGenreGettingRepository {
+IGenresListingRepository,
+IGenreGettingRepository,
+IGenreRemovingRepository {
     private genreModel: ModelCtor<Model<any, any>>;
     private bookModel: ModelCtor<Model<any, any>>;
 
@@ -69,7 +71,7 @@ IGenreGettingRepository {
         };
     }
 
-    public async list(): Promise<IGenreListingResponse> {
+    public async list(): Promise<IGenresListingResponse> {
         let response = await this.genreModel.findAll({
             attributes: [
                 ['id', 'id_genre'],
@@ -90,5 +92,19 @@ IGenreGettingRepository {
             rows: response,
             rowsCount: response.length,
         };
+    }
+
+    public async remove(options: IGenreRemovingOptions): Promise<void> {
+        let response = await this.genreModel.destroy({
+            where: {
+                id: options.id_genre,
+            },
+        });
+        if (!response) {
+            throw new Error('Someting went wrong in GenreRepository remove');
+        }
+        if (response == 0) {
+            throw new NotFoundError('Genre not found');
+        }
     }
 }

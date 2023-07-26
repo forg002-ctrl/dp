@@ -5,13 +5,19 @@ import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
 import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 
 import { IBookCreationRepoData, IBookCreationRepository, IBookCreationResponse } from '@src/modules/book/BookCreation';
-import { IBookListingRepository, IBookListingResponse, IListBook, IListBookRepositoryParams } from '@src/modules/book/BookListing';
+import { IBooksListingRepository, IBooksListingResponse, IListBook, IListBookRepositoryParams } from '@src/modules/book/BooksListing';
 import { IBookGettingRepository, IBookGettingResponse, IBookGettingOptions } from '@src/modules/book/BookGetting';
+import { IBookRemovingOptions, IBookRemovingRepository } from '@src/modules/book/BookRemoving';
+import { IBooksListingByGenreRepository, IListBookByGenreOptions, IListBookByGenreResponse } from '@src/modules/book/BooksListingByGenre';
+import { IBooksListingByAuthorRepository, IListBookByAuthorOptions, IListBookByAuthorResponse } from '@src/modules/book/BooksListingByAuthor';
 
 export class BookRepository implements
 IBookCreationRepository,
-IBookListingRepository,
-IBookGettingRepository {
+IBooksListingRepository,
+IBookGettingRepository,
+IBookRemovingRepository,
+IBooksListingByAuthorRepository,
+IBooksListingByGenreRepository {
     private bookModel: ModelCtor<Model<any, any>>;
     private authorModel: ModelCtor<Model<any, any>>;
     private genreModel: ModelCtor<Model<any, any>>;
@@ -54,7 +60,7 @@ IBookGettingRepository {
         };
     }
 
-    public async list(params: IListBookRepositoryParams): Promise<IBookListingResponse> {
+    public async list(params: IListBookRepositoryParams): Promise<IBooksListingResponse> {
         let response = await this.bookModel.findAll({
             include: [
                 {
@@ -127,6 +133,88 @@ IBookGettingRepository {
             price: response.price,
             uid_file: response.uid_file,
             info: response.info,
+        };
+    }
+
+    public async remove(options: IBookRemovingOptions): Promise<void> {
+        let response = await this.bookModel.destroy({
+            where: {
+                id: options.id_book,
+            },
+        });
+        if (!response) {
+            throw new Error('Someting went wrong in BookRepository remove');
+        }
+        if (response == 0) {
+            throw new NotFoundError('Book not found');
+        }
+    }
+
+    public async listByGenre(options: IListBookByGenreOptions): Promise<IListBookByGenreResponse> {
+        let response = await this.bookModel.findAll({
+            include: [
+                {
+                    model: this.authorModel,
+                    attributes: [],
+                },
+                {
+                    model: this.genreModel,
+                    attributes: [],
+                },
+            ],
+            where: {
+                dbGenreId: options.id_genre,
+            },
+            attributes: [
+                ['id', 'id_book'],
+                ['dbGenreId', 'id_genre'],
+                ['dbAuthorId', 'id_author'],
+                [Sequelize.fn('CONCAT', col('db_author.firstname'), ' ', col('db_author.lastname')), 'author_fullname'],
+                [col('db_genre.name'), 'genre_name'],
+                'title',
+                'price',
+                'uid_file',
+            ],
+            raw: true,
+        }) as unknown as IListBook[];
+
+        return {
+            rows: response,
+            rowsCount: response.length,
+        };
+    }
+
+    public async listByAuthor(options: IListBookByAuthorOptions): Promise<IListBookByAuthorResponse> {
+        let response = await this.bookModel.findAll({
+            include: [
+                {
+                    model: this.authorModel,
+                    attributes: [],
+                },
+                {
+                    model: this.genreModel,
+                    attributes: [],
+                },
+            ],
+            where: {
+                dbAuthorId: options.id_author,
+            },
+            attributes: [
+                ['id', 'id_book'],
+                ['dbGenreId', 'id_genre'],
+                ['dbAuthorId', 'id_author'],
+                [Sequelize.fn('CONCAT', col('db_author.firstname'), ' ', col('db_author.lastname')), 'author_fullname'],
+                [col('db_genre.name'), 'genre_name'],
+                'title',
+                'price',
+                'uid_file',
+            ],
+            raw: true,
+        }) as unknown as IListBook[];
+
+        return {
+            rows: response,
+            rowsCount: response.length,
         };
     }
 }

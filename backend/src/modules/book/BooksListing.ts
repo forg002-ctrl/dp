@@ -17,29 +17,29 @@ export interface IListBookRepositoryParams {
     search: string;
 }
 
-export interface IBookListingResponse {
+export interface IBooksListingResponse {
     rows: IListBook[];
     rowsCount: number;
 }
 
-export interface IBookListingRepository {
-    list(params: IListBookRepositoryParams): Promise<IBookListingResponse>;
+export interface IBooksListingRepository {
+    list(params: IListBookRepositoryParams): Promise<IBooksListingResponse>;
 }
 
-export interface IBookListing {
-    execute(params: IListBookParams): Promise<IBookListingResponse>;
+export interface IBooksListing {
+    execute(params: IListBookParams): Promise<IBooksListingResponse>;
 }
 
-export class BookListing implements IBookListing {
-    private repo: IBookListingRepository;
+export class BooksListing implements IBooksListing {
+    private repo: IBooksListingRepository;
 
     public constructor(options: {
-        repo: IBookListingRepository;
+        repo: IBooksListingRepository;
     }) {
         this.repo = options.repo;
     }
 
-    public async execute(params: IListBookParams): Promise<IBookListingResponse> {
+    public async execute(params: IListBookParams): Promise<IBooksListingResponse> {
         return await this.repo.list({
             search: params.search ? params.search : '',
         });

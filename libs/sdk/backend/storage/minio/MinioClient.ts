@@ -60,4 +60,8 @@ export class MinioClient {
     public async getFileStream(fileName: string): Promise<Readable> {
         return await this.minio.getObject(this.bucket_name, fileName);
     }
+
+    public async removeFile(fileName: string): Promise<void> {
+        await this.minio.removeObject(this.bucket_name, fileName);
+    }
 }

@@ -6,7 +6,7 @@ import {
     IResponseBody,
 } from '@src/ext/shared/services/backend/routes//authors/GetRouteDescription';
 
-import { AuthorListing } from '@src/modules/author/AuthorListing';
+import { AuthorsListing } from '@src/modules/author/AuthorsListing';
 import { AuthorRepository } from '@src/modules/author/repository/AuthorRepository';
 
 export class GetAuthorsRoute extends Route {
@@ -17,10 +17,10 @@ export class GetAuthorsRoute extends Route {
     }
 
     public async main(req: Request, res: Response): Promise<void> {
-        let oAuthorListing = new AuthorListing({
+        let oAuthorsListing = new AuthorsListing({
             repo: new AuthorRepository(),
         });
-        let response = await oAuthorListing.execute();
+        let response = await oAuthorsListing.execute();
 
         res.status(200).json(<IResponseBody>response);
     }

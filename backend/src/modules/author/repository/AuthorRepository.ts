@@ -6,12 +6,14 @@ import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/Postgr
 
 import { IAuthorCreationRepoData, IAuthorCreationResponse, IAuthorCreationRepository } from '@src/modules/author/AuthorCreation';
 import { IAuthorGettingOptions, IAuthorGettingRepository, IAuthorGettingResponse } from '@src/modules/author/AuthorGetting';
-import { IAuthorListingRepository, IAuthorListingResponse, IListAuthor } from '@src/modules/author/AuthorListing';
+import { IAuthorsListingRepository, IAuthorsListingResponse, IListAuthor } from '@src/modules/author/AuthorsListing';
+import { IAuthorRemovingRepository, IAuthorRemovingOptions } from '@src/modules/author/AuthorRemoving';
 
 export class AuthorRepository implements
 IAuthorCreationRepository,
-IAuthorListingRepository,
-IAuthorGettingRepository {
+IAuthorsListingRepository,
+IAuthorGettingRepository,
+IAuthorRemovingRepository {
     private authorModel: ModelCtor<Model<any, any>>;
     private bookModel: ModelCtor<Model<any, any>>;
 
@@ -78,7 +80,7 @@ IAuthorGettingRepository {
         };
     }
 
-    public async list(): Promise<IAuthorListingResponse> {
+    public async list(): Promise<IAuthorsListingResponse> {
         let response = await this.authorModel.findAll({
             attributes: [
                 ['id', 'id_author'],
@@ -100,5 +102,19 @@ IAuthorGettingRepository {
             rows: response,
             rowsCount: response.length,
         };
+    }
+
+    public async remove(options: IAuthorRemovingOptions): Promise<void> {
+        let response = await this.authorModel.destroy({
+            where: {
+                id: options.id_author,
+            },
+        });
+        if (!response) {
+            throw new Error('Someting went wrong in AuthorRepository remove');
+        }
+        if (response == 0) {
+            throw new NotFoundError('Author not found');
+        }
     }
 }

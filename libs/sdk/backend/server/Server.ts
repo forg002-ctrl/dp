@@ -32,6 +32,7 @@ export class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
 
+        // TODO: Remove for make authorization work
         // for (let middleware of options.middlewares) {
         //     this.app.use('/', middleware);
         // }

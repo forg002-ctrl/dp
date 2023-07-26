@@ -60,7 +60,6 @@ export class SigningIn implements ISigningIn {
             throw new UserInputError('Wrong password');
         }
 
-        console.log(user);
         let accessToken = this.accessTokenSigning.execute({
             id_user: user.id_user,
             username: user.username,
