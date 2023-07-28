@@ -8,6 +8,7 @@ export interface IPostgresqlClientOptions {
     db_user: string;
     db_password: string;
     db_host: string;
+    db_port: number;
 }
 
 export class PostgresqlClient {
@@ -17,12 +18,14 @@ export class PostgresqlClient {
     private tables: Record<string, ModelCtor<Model<any, any>>>;
 
     private constructor(options: IPostgresqlClientOptions) {
+        console.log(options);
         this.sequlize = new Sequelize(
             options.db_name,
             options.db_user,
             options.db_password,
             {
                 host: options.db_host,
+                port: options.db_port,
                 dialect: 'postgres',
                 logging: false,
             },
@@ -57,11 +60,13 @@ export class PostgresqlClient {
     public registerAssociation(association: IAssociation): void {
         if (!(association.mainModelName in this.tables)) {
             console.log(`Model with name - "${association.mainModelName}" is not initialized`);
+
             return;
         }
 
         if (!(association.secondaryModelName in this.tables)) {
             console.log(`Model with name - "${association.secondaryModelName}" is not initialized`);
+
             return;
         }
 
@@ -108,7 +113,7 @@ export class PostgresqlClient {
         await this.sequlize.sync({ alter: true });
     }
 
-    private getTables(): Record<string, ModelCtor<Model<any, any>>> {
+    public getTables(): Record<string, ModelCtor<Model<any, any>>> {
         return this.tables;
     }
 
@@ -118,5 +123,10 @@ export class PostgresqlClient {
 
     public getModel(name : string): ModelCtor<Model<any, any>> {
         return this.getTables()[name];
+    }
+
+    public async closeConnection(): Promise<void> {
+        await this.sequlize.drop();
+        await this.sequlize.close();
     }
 }

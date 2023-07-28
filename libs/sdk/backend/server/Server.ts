@@ -2,7 +2,7 @@ import express, { Express, Router, Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
-import bodyParser from 'body-parser'
+import bodyParser from 'body-parser';
 
 import { Documentation } from '../swagger/Documentation';
 
@@ -93,5 +93,9 @@ export class Server {
         this.getRouter().get('/swagger', (req: Request, res: Response): void => {
             res.send(swaggerDocsHtml);
         });
+    }
+
+    public getExpressApp(): Express {
+        return this.app;
     }
 }

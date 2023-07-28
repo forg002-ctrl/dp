@@ -14,7 +14,7 @@ export interface IFileRemoving {
 
 export class FileRemoving implements IFileRemoving {
     private fsSrvHost: string;
-    
+
     public constructor(options: {
         fsSrvHost: string;
     }) {
@@ -26,7 +26,7 @@ export class FileRemoving implements IFileRemoving {
         if (response.status !== 200) {
             throw new Error('Something went wrong');
         }
-        
+
         return response.data;
     }
 }

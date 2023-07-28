@@ -39,6 +39,7 @@ const IdentificationMiddleware: IMiddlewareInterface = async (req: CustomRequest
             }
             req.appUser = decodedData;
         }
+
         return next();
     } catch (err) {
         throw new AuthError();
@@ -52,5 +53,6 @@ export interface IIdentificationMiddlewareOptions {
 
 export const CreateIdentificationMiddleware = (options: IIdentificationMiddlewareOptions): IMiddlewareInterface => {
     _tokens = options;
+
     return IdentificationMiddleware;
 };

@@ -74,7 +74,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
                     'price',
                     'uid_file',
                 ],
-            }
+            },
         },
         rowsCount: {
             type: 'number',

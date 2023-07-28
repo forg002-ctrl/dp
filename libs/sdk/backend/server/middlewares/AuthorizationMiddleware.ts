@@ -30,7 +30,7 @@ const AuthorizationMiddleware: IMiddlewareInterface = async (req: Request, res: 
     try {
         if (req.method === 'OPTIONS') {
             res.sendStatus(200);
-    
+
             return;
         }
 

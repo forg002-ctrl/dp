@@ -50,7 +50,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
                     'lastname',
                     'booksCount',
                 ],
-            }
+            },
         },
         rowsCount: {
             type: 'number',

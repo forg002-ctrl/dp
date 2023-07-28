@@ -145,7 +145,7 @@ IBooksListingByGenreRepository {
         if (!response) {
             throw new Error('Someting went wrong in BookRepository remove');
         }
-        if (response == 0) {
+        if (response === 0) {
             throw new NotFoundError('Book not found');
         }
     }

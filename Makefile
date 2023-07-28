@@ -13,8 +13,11 @@ install-fs_srv:
 
 install: install-base install-backend install-frontend install-fs_srv
 
+start-test:
+	docker-compose up --remove-orphans -d database-test backend
+
 start:
-	docker-compose up --remove-orphans -d database backend frontend minio fs_srv
+	docker-compose up --remove-orphans -d database database-test backend frontend minio fs_srv
 
 stop:
 	docker-compose stop

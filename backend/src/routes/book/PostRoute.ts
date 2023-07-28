@@ -4,8 +4,7 @@ import { Route } from '@src/ext/sdk/backend/app/route/Route';
 
 import { routeDescription,
     IRequestBody,
-    IResponseBody,
-} from '@src/ext/shared/services/backend/routes//book/PostRouteDescription';
+    IResponseBody } from '@src/ext/shared/services/backend/routes//book/PostRouteDescription';
 
 import { GenreGetting } from '@src/modules/genre/GenreGetting';
 import { GenreRepository } from '@src/modules/genre/repository/GenreRepository';
@@ -42,7 +41,7 @@ export class PostBookRoute extends Route {
                 repo: new AuthorRepository(),
             }),
             fileSaving: new FileSaving({
-                fsSrvHost: 'http://localhost:3003'
+                fsSrvHost: 'http://localhost:3003',
             }),
         });
         let response = await oBookCreation.execute({

@@ -42,7 +42,7 @@ export class BookRemoving implements IBookRemoving {
         await this.repo.remove({
             id_book: bookToRemove.id_book,
         });
-        
+
         let response = await this.fileRemoving.execute({
             uid_file: bookToRemove.uid_file,
         });

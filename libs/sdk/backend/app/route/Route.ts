@@ -12,8 +12,8 @@ export interface IRouteOptions {
     description: IRouteDescription;
 }
 
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 export abstract class Route {
     private description: IRouteDescription;

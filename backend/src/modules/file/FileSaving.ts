@@ -1,4 +1,4 @@
-import axios, { toFormData } from 'axios';
+import axios from 'axios';
 import FormData from 'form-data';
 
 export interface IFileSavingData {
@@ -15,7 +15,7 @@ export interface IFileSaving {
 
 export class FileSaving implements IFileSaving {
     private fsSrvHost: string;
-    
+
     public constructor(options: {
         fsSrvHost: string;
     }) {
@@ -37,7 +37,7 @@ export class FileSaving implements IFileSaving {
         if (response.status !== 201) {
             throw new Error('Something went wrong');
         }
-        
+
         return response.data;
     }
 }

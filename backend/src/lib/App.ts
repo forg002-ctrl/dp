@@ -1,3 +1,5 @@
+import { Express } from 'express';
+
 import { Config } from '@src/lib/Config';
 
 import { Server } from '@src/ext/sdk/backend/server/Server';
@@ -23,9 +25,12 @@ export class App {
         if (!this.server || !(this.server instanceof Server)) {
             throw new Error('Server not ready');
         }
+
         await this.initDatabase(options.models, options.associations);
 
-        this.server.start();
+        if (!global.testMode) {
+            this.server.start();
+        }
     }
 
     private async initServer(routes: Route[]): Promise<void> {
@@ -62,6 +67,7 @@ export class App {
             db_user: Config.DB_USER,
             db_password: Config.DB_PASSWORD,
             db_host: Config.DB_HOST,
+            db_port: Config.DB_PORT,
         });
 
         let postgresqlClient = PostgresqlClient.GetInstance();
@@ -76,5 +82,9 @@ export class App {
             association.registerAssociation(postgresqlClient);
         }
         await postgresqlClient.syncTables();
+    }
+
+    public getExpressApp(): Express {
+        return this.server.getExpressApp();
     }
 }
