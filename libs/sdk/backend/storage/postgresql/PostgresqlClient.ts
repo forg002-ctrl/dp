@@ -18,7 +18,6 @@ export class PostgresqlClient {
     private tables: Record<string, ModelCtor<Model<any, any>>>;
 
     private constructor(options: IPostgresqlClientOptions) {
-        console.log(options);
         this.sequlize = new Sequelize(
             options.db_name,
             options.db_user,
@@ -113,16 +112,8 @@ export class PostgresqlClient {
         await this.sequlize.sync({ alter: true });
     }
 
-    public getTables(): Record<string, ModelCtor<Model<any, any>>> {
-        return this.tables;
-    }
-
-    public getSequlize(): Sequelize {
-        return this.sequlize;
-    }
-
     public getModel(name : string): ModelCtor<Model<any, any>> {
-        return this.getTables()[name];
+        return this.tables[name];
     }
 
     public async closeConnection(): Promise<void> {
