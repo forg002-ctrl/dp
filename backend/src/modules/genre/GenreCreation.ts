@@ -1,3 +1,6 @@
+import { UserInputError } from '@src/ext/sdk/backend/errors/types/UserInputError';
+import { IGenreGettingByName } from '@src/modules/genre/GenreGettingByName';
+
 export interface IGenreCreationData {
     name: string;
 }
@@ -20,16 +23,25 @@ export interface IGenreCreation {
 
 export class GenreCreation implements IGenreCreation {
     private repo: IGenreCreationRepository;
+    private genreGettingByName: IGenreGettingByName
 
     public constructor(options: {
         repo: IGenreCreationRepository;
+        genreGettingByName: IGenreGettingByName;
     }) {
         this.repo = options.repo;
+        this.genreGettingByName = options.genreGettingByName;
     }
 
     public async execute(data: IGenreCreationData): Promise<IGenreCreationResponse> {
-        // TODO: add unique check
         this.validateData(data);
+
+        let response = await this.genreGettingByName.execute({
+            name: data.name,
+        });
+        if (response) {
+            throw new UserInputError('Genre with such name already exists');
+        }
 
         return await this.repo.create({
             name: data.name,

@@ -16,7 +16,6 @@ let app: App;
 
 const start = async (): Promise<supertest.SuperTest<supertest.Test>> => {
     global.testMode = true;
-    console.log(__dirname);
     if (!app) {
         Config.Init({
             http_server_port: 0,

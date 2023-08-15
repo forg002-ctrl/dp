@@ -4,17 +4,25 @@ export interface IListGenre {
     booksCount: number;
 }
 
+export interface IListGenreParams {
+    search?: string;
+}
+
+export interface IListGenreRepositoryParams {
+    search: string;
+}
+
 export interface IGenresListingResponse {
     rows: IListGenre[];
     rowsCount: number;
 }
 
 export interface IGenresListingRepository {
-    list(): Promise<IGenresListingResponse>;
+    list(params: IListGenreRepositoryParams): Promise<IGenresListingResponse>;
 }
 
 export interface IGenresListing {
-    execute(): Promise<IGenresListingResponse>;
+    execute(params: IListGenreParams): Promise<IGenresListingResponse>;
 }
 
 export class GenresListing implements IGenresListing {
@@ -26,7 +34,9 @@ export class GenresListing implements IGenresListing {
         this.repo = options.repo;
     }
 
-    public async execute(): Promise<IGenresListingResponse> {
-        return await this.repo.list();
+    public async execute(params: IListGenreParams): Promise<IGenresListingResponse> {
+        return await this.repo.list({
+            search: params.search ? params.search : '',
+        });
     }
 }

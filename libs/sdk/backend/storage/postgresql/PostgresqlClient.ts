@@ -117,7 +117,13 @@ export class PostgresqlClient {
     }
 
     public async closeConnection(): Promise<void> {
-        await this.sequlize.drop();
+        let tablesNames = Object.keys(this.tables);
+        for (let name of tablesNames) {
+            await this.tables[name].drop({
+                cascade: true,
+            });
+        }
+        
         await this.sequlize.close();
     }
 }

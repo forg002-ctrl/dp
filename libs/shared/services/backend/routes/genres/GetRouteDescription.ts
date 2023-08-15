@@ -11,6 +11,10 @@ import {
     Generate500ResponseSchema,
 } from '../../../../lib/routing/description/ResponseDefinition';
 
+export interface IListQuery {
+    search?: string;
+}
+
 export interface IListGenre {
     id_genre: string;
     name: string;
@@ -61,6 +65,17 @@ let routeDefinition: IRouteDefinition = {
     tags: ['Genre'],
     summary: 'GET list genres route',
     description: 'Route for listing genres',
+    parameters: [
+        {
+            in: 'query',
+            name: 'search',
+            required: false,
+            description: 'Search string',
+            schema: {
+                type: 'string',
+            },
+        },
+    ],
     responses: {
         200: Generate200ResponseSchema('Genres listed successfully', responseBodySchema),
         400: Generate400ResponseSchema('Bad Request'),
