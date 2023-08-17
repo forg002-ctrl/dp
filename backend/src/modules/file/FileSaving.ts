@@ -1,5 +1,6 @@
-import axios from 'axios';
 import FormData from 'form-data';
+
+import { SDK } from '@src/ext/sdk/backend/index';
 
 export interface IFileSavingData {
     file: Express.Multer.File;
@@ -23,21 +24,24 @@ export class FileSaving implements IFileSaving {
     }
 
     public async execute(data: IFileSavingData): Promise<IFileSavingResponse> {
+        let fsRemoteService = await SDK.GetInstance().getRemoteService('fs_srv');
+        if (!fsRemoteService) {
+            throw new Error('FS_SRV unavailable');
+        }
+
         let formData = new FormData();
         formData.append('file', Buffer.from(data.file.buffer), {
             filename: data.file.originalname,
             contentType: data.file.mimetype,
         });
 
-        let response = await axios.post<IFileSavingResponse>(`http://fs_srv:3003/file`, formData, {
-            headers: {
-                ...formData.getHeaders(),
-            },
+        let response = await fsRemoteService.post(`/file`, formData, {
+            ...formData.getHeaders(),
         });
         if (response.status !== 201) {
             throw new Error('Something went wrong');
         }
 
-        return response.data;
+        return await response.json<IFileSavingResponse>();
     }
 }

@@ -5,6 +5,7 @@ dotenv.config({ path: `${__dirname}/../../../.env` });
 import supertest from 'supertest';
 
 import { App } from '@src/lib/App';
+import { SDK } from '@src/ext/sdk/backend/index';
 import { Config } from '@src/lib/Config';
 
 import { appModels } from '@src/db/modelIndex';
@@ -28,6 +29,11 @@ const start = async (): Promise<supertest.SuperTest<supertest.Test>> => {
             access_token_private_key: '',
             refresh_token_public_key: '',
             refresh_token_private_key: '',
+        });
+
+        SDK.Init({
+            serviceName: 'backend',
+            testMode: true,
         });
 
         let _app = new App();

@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { Config } from '@src/lib/Config';
+import { SDK } from '@src/ext/sdk/backend/index';
 import { App } from '@src/lib/App';
 
 import { appModels } from '@src/db/modelIndex';
@@ -23,6 +24,10 @@ void (async (): Promise<void> => {
         access_token_private_key: process.env.ACCESS_TOKEN_PRIVATE_KEY as string,
         refresh_token_public_key: process.env.REFRESH_TOKEN_PUBLIC_KEY as string,
         refresh_token_private_key: process.env.REFRESH_TOKEN_PRIVATE_KEY as string,
+    });
+
+    SDK.Init({
+        serviceName: 'backend',
     });
 
     let app = new App();

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { SDK } from '@src/ext/sdk/backend/index';
 
 export interface IFileRemovingOptions {
     uid_file: string;
@@ -22,11 +22,16 @@ export class FileRemoving implements IFileRemoving {
     }
 
     public async execute(options: IFileRemovingOptions): Promise<IFileRemovingResponse> {
-        let response = await axios.delete<IFileRemovingResponse>(`http://fs_srv:3003/file/${options.uid_file}`);
+        let fsRemoteService = await SDK.GetInstance().getRemoteService('fs_srv');
+        if (!fsRemoteService) {
+            throw new Error('FS_SRV unavailable');
+        }
+
+        let response = await fsRemoteService.delete(`/file/${options.uid_file}`);
         if (response.status !== 200) {
             throw new Error('Something went wrong');
         }
 
-        return response.data;
+        return await response.json<IFileRemovingResponse>();
     }
 }
