@@ -12,25 +12,25 @@ import {
 } from '../../../../lib/routing/description/ResponseDefinition';
 
 export interface IRequestBody {
-    id_genre: string;
-    id_author: string;
+    id_genre: number;
+    id_author: number;
     title: string;
     price: number;
     info: string;
 }
 
 export interface IResponseBody {
-    id_book: string;
+    id_book: number;
 }
 
 let requestBodySchema: JSONSchemaType<IRequestBody> = {
     type: 'object',
     properties: {
         id_genre: {
-            type: 'string',
+            type: 'number',
         },
         id_author: {
-            type: 'string',
+            type: 'number',
         },
         title: {
             type: 'string',
@@ -55,7 +55,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
     type: 'object',
     properties: {
         id_book: {
-            type: 'string',
+            type: 'number',
         },
     },
     required: [

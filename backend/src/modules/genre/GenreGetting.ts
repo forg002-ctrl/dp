@@ -1,9 +1,9 @@
 export interface IGenreGettingOptions {
-    id_genre: string;
+    id_genre: number;
 }
 
 export interface IGenreGettingResponse {
-    id_genre: string;
+    id_genre: number;
     name: string;
     booksCount: number;
 }

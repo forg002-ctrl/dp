@@ -12,7 +12,7 @@ import {
 } from '../../../../lib/routing/description/ResponseDefinition';
 
 export interface IListAuthor {
-    id_author: string;
+    id_author: number;
     firstname: string;
     lastname: string;
     booksCount: number;
@@ -32,7 +32,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
                 type: 'object',
                 properties: {
                     id_author: {
-                        type: 'string',
+                        type: 'number',
                     },
                     firstname: {
                         type: 'string',

@@ -1,5 +1,5 @@
 export interface IListGenre {
-    id_genre: string;
+    id_genre: number;
     name: string;
     booksCount: number;
 }

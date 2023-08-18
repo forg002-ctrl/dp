@@ -1,7 +1,7 @@
 export interface IListBook {
-    id_book: string;
-    id_author: string;
-    id_genre: string;
+    id_book: number;
+    id_author: number;
+    id_genre: number;
     author_fullname: string;
     genre_name: string;
     title: string;
@@ -10,7 +10,7 @@ export interface IListBook {
 }
 
 export interface IListBookByAuthorOptions {
-    id_author: string;
+    id_author: number;
 }
 
 export interface IListBookByAuthorResponse {

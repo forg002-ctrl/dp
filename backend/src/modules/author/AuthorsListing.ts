@@ -1,5 +1,5 @@
 export interface IListAuthor {
-    id_author: string;
+    id_author: number;
     firstname: string;
     lastname: string;
     booksCount: number;

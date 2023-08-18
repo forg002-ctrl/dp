@@ -3,7 +3,7 @@ export interface IGenreGettingByNameOptions {
 }
 
 export interface IGenreGettingByNameResponse {
-    id_genre: string;
+    id_genre: number;
     name: string;
     booksCount: number;
 }

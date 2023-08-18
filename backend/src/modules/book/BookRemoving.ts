@@ -2,7 +2,7 @@ import { IBookGetting } from '@src/modules/book/BookGetting';
 import { IFileRemoving } from '@src/modules/file/FileRemoving';
 
 export interface IBookRemovingOptions {
-    id_book: string;
+    id_book: number;
 }
 
 export interface IBookRemovingResponse {

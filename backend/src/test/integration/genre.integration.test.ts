@@ -5,7 +5,7 @@ import { IResponseBody as IListResponseBody } from '@src/ext/shared/services/bac
 import { IResponseBody as IGetResponseBody } from '@src/ext/shared/services/backend/routes/genre/GetRouteDescription';
 import { IResponseBody as IDeleteResponseBody } from '@src/ext/shared/services/backend/routes/genre/DeleteRouteDescription';
 
-let id_genre: string | null = null;
+let id_genre: number | null = null;
 const genre_mock: IRequestBody = {
     name: 'test-name',
 };

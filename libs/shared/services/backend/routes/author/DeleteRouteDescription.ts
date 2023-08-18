@@ -12,7 +12,7 @@ import {
 } from '../../../../lib/routing/description/ResponseDefinition';
 
 export interface IRequestParams {
-    id_author: string;
+    id_author: number;
 }
 
 export interface IResponseBody {
@@ -42,7 +42,7 @@ let routeDefinition: IRouteDefinition = {
             description: 'Author Identifier',
             required: true,
             schema: {
-                type: 'string',
+                type: 'number',
             },
         },
     ],

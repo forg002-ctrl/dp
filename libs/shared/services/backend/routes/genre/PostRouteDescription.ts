@@ -15,7 +15,7 @@ export interface IRequestBody {
 }
 
 export interface IResponseBody {
-    id_genre: string;
+    id_genre: number;
 }
 
 let requestBodySchema: JSONSchemaType<IRequestBody> = {
@@ -34,7 +34,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
     type: 'object',
     properties: {
         id_genre: {
-            type: 'string',
+            type: 'number',
         },
     },
     required: [

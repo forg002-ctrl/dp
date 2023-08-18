@@ -12,7 +12,7 @@ import {
 } from '../../../../lib/routing/description/ResponseDefinition';
 
 export interface IRequestParams {
-    id_genre: string;
+    id_genre: number;
 }
 
 export interface IResponseBody {
@@ -42,7 +42,7 @@ let routeDefinition: IRouteDefinition = {
             description: 'Genre Identifier',
             required: true,
             schema: {
-                type: 'string',
+                type: 'number',
             },
         },
     ],

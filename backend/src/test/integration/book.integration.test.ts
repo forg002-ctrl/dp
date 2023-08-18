@@ -59,8 +59,8 @@ afterAll((): void => {
     (<TestSDK>SDK.GetInstance()).resetRemoteServices();
 });
 
-let id_author: string | null = null;
-let id_genre: string | null = null;
+let id_author: number | null = null;
+let id_genre: number | null = null;
 
 const getAuthorMock = (): IPostRequestAuthorBody => {
     return {
@@ -111,11 +111,11 @@ const generateGenre = async (): Promise<void> => {
     id_genre = responseBody.id_genre;
 };
 
-let id_book: string | null = null;
+let id_book: number | null = null;
 const getBookMock = (): IRequestBody => {
     return {
-        id_genre: id_genre as string,
-        id_author: id_author as string,
+        id_genre: id_genre as number,
+        id_author: id_author as number,
         title: 'test-title',
         price: 10,
         info: 'test-info',

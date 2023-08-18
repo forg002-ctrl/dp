@@ -16,7 +16,7 @@ export interface IListQuery {
 }
 
 export interface IListGenre {
-    id_genre: string;
+    id_genre: number;
     name: string;
     booksCount: number;
 }
@@ -35,7 +35,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
                 type: 'object',
                 properties: {
                     id_genre: {
-                        type: 'string',
+                        type: 'number',
                     },
                     name: {
                         type: 'string',

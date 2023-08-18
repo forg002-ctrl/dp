@@ -13,7 +13,7 @@ export interface IAuthorCreationRepoData {
 }
 
 export interface IAuthorCreationResponse {
-    id_author: string;
+    id_author: number;
 }
 
 export interface IAuthorCreationRepository {

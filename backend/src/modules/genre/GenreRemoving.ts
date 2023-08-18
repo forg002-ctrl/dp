@@ -2,7 +2,7 @@ import { IBooksRemovingByGenre } from '@src/modules/book/BooksRemovingByGenre';
 import { IGenreGetting } from '@src/modules/genre/GenreGetting';
 
 export interface IGenreRemovingOptions {
-    id_genre: string;
+    id_genre: number;
 }
 
 export interface IGenreRemovingResponse {

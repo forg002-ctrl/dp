@@ -2,7 +2,7 @@ import { IBooksRemovingByAuthor } from '@src/modules/book/BooksRemovingByAuthor'
 import { IAuthorGetting } from '@src/modules/author/AuthorGetting';
 
 export interface IAuthorRemovingOptions {
-    id_author: string;
+    id_author: number;
 }
 
 export interface IAuthorRemovingResponse {

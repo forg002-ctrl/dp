@@ -5,7 +5,7 @@ import { IResponseBody as IListResponseBody } from '@src/ext/shared/services/bac
 import { IResponseBody as IGetResponseBody } from '@src/ext/shared/services/backend/routes/author/GetRouteDescription';
 import { IResponseBody as IDeleteResponseBody } from '@src/ext/shared/services/backend/routes/author/DeleteRouteDescription';
 
-let id_author: string | null = null;
+let id_author: number | null = null;
 const author_mock: IRequestBody = {
     firstname: 'test-firstname',
     lastname: 'test-lastname',

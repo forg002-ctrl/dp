@@ -12,11 +12,11 @@ import {
 } from '../../../../lib/routing/description/ResponseDefinition';
 
 export interface IRequestParams {
-    id_author: string;
+    id_author: number;
 }
 
 export interface IResponseBody {
-    id_author: string;
+    id_author: number;
     firstname: string;
     lastname: string;
     birthdate: string;
@@ -28,7 +28,7 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
     type: 'object',
     properties: {
         id_author: {
-            type: 'string',
+            type: 'number',
         },
         firstname: {
             type: 'string',
@@ -67,7 +67,7 @@ let routeDefinition: IRouteDefinition = {
             description: 'Author Identifier',
             required: true,
             schema: {
-                type: 'string',
+                type: 'number',
             },
         },
     ],

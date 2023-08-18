@@ -1,9 +1,9 @@
 export interface IAuthorGettingOptions {
-    id_author: string;
+    id_author: number;
 }
 
 export interface IAuthorGettingResponse {
-    id_author: string;
+    id_author: number;
     firstname: string;
     lastname: string;
     birthdate: string;

@@ -6,7 +6,7 @@ export interface IGenreCreationData {
 }
 
 export interface IGenreCreationResponse {
-    id_genre: string;
+    id_genre: number;
 }
 
 export interface IGenreCreationRepoData {

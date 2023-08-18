@@ -1,7 +1,7 @@
 export interface IListBook {
-    id_book: string;
-    id_author: string;
-    id_genre: string;
+    id_book: number;
+    id_author: number;
+    id_genre: number;
     author_fullname: string;
     genre_name: string;
     title: string;

@@ -5,8 +5,8 @@ import { IAuthorGetting } from '@src/modules/author/AuthorGetting';
 import { IFileSaving } from '@src/modules/file/FileSaving';
 
 export interface IBookCreationData {
-    id_genre: string;
-    id_author: string;
+    id_genre: number;
+    id_author: number;
     title: string;
     price: number;
     info: string;
@@ -14,16 +14,16 @@ export interface IBookCreationData {
 }
 
 export interface IBookCreationRepoData {
-    id_genre: string;
-    id_author: string;
-    uid_file: string;
+    id_genre: number;
+    id_author: number;
     title: string;
     price: number;
     info: string;
+    uid_file: string;
 }
 
 export interface IBookCreationResponse {
-    id_book: string;
+    id_book: number;
 }
 
 export interface IBookCreationRepository {

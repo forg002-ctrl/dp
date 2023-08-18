@@ -1,5 +1,3 @@
-import { uuid } from 'uuidv4';
-
 import { Crypto } from '@src/ext/sdk/backend/utils/Crypto';
 import { RegExpLibrary } from '@src/ext/sdk/backend/utils/RegExpLibrary';
 
@@ -15,7 +13,6 @@ export interface ISigningUpData {
 }
 
 export interface ISigningUpRepoData {
-    id_user: string;
     username: string;
     email: string;
     password: string;
@@ -72,7 +69,6 @@ export class SigningUp implements IUserSigningUp {
         }
 
         let repoResponse = await this.repo.create({
-            id_user: uuid(),
             username: data.username,
             email: data.email,
             password: await this.crypto.hashPassword(data.password),

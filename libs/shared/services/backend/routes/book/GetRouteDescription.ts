@@ -12,13 +12,13 @@ import {
 } from '../../../../lib/routing/description/ResponseDefinition';
 
 export interface IRequestParams {
-    id_book: string;
+    id_book: number;
 }
 
 export interface IResponseBody {
-    id_book: string;
-    id_author: string;
-    id_genre: string;
+    id_book: number;
+    id_author: number;
+    id_genre: number;
     author_fullname: string;
     genre_name: string;
     title: string;
@@ -31,13 +31,13 @@ let responseBodySchema: JSONSchemaType<IResponseBody> = {
     type: 'object',
     properties: {
         id_book: {
-            type: 'string',
+            type: 'number',
         },
         id_author: {
-            type: 'string',
+            type: 'number',
         },
         id_genre: {
-            type: 'string',
+            type: 'number',
         },
         author_fullname: {
             type: 'string',
@@ -82,7 +82,7 @@ let routeDefinition: IRouteDefinition = {
             description: 'Book Identifier',
             required: true,
             schema: {
-                type: 'string',
+                type: 'number',
             },
         },
     ],

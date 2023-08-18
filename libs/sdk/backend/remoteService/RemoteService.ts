@@ -1,6 +1,6 @@
-import axios, { AxiosHeaders, AxiosRequestConfig } from 'axios';
 import FormData from 'form-data';
 import { HTTP_METHODS } from '../app/route/description/interfaces/IRouteDescription';
+import fetch from 'node-fetch';
 
 export interface IRemoteService {
     getServiceName(): string;
@@ -28,31 +28,43 @@ export class RemoteService implements IRemoteService {
     }
     
     private async fetch(method: HTTP_METHODS, endpoint: string, data?: Record<string, unknown> | FormData, additionalHeaders?: Record<string, unknown>): Promise<IRemoteResponse> {
-        let headers: AxiosHeaders;
-        if (additionalHeaders) {
-            headers = new AxiosHeaders({
-                'Content-Type': 'application/json',
-                ...additionalHeaders,
-            });
-        } else {
-            headers = new AxiosHeaders({
-                'Content-Type': 'application/json',
-            });
-        }
+        let headers: Record<string, unknown> = {};
         
-        let requestConfig: AxiosRequestConfig = {
+        if (data && data instanceof FormData) {
+            if (additionalHeaders) {
+                headers = {
+                    ...additionalHeaders,
+                };
+            }
+        } else {
+            if (additionalHeaders) {
+                headers = {
+                    'Content-Type': 'application/json',
+                    ...additionalHeaders,
+                };
+            } else {
+                headers = {
+                    'Content-Type': 'application/json',
+                };
+            }
+        }
+
+        let url: string = endpoint.startsWith('/') ? `http://fs_srv:3003${endpoint}` : `http://fs_srv:3003/${endpoint}`;
+        let requestConfig: any = {
             method: method,
-            url: endpoint.startsWith('/') ? `http://fs_srv:3003${endpoint}` : `http://fs_srv:3003/${endpoint}`,
+            credentials: 'include',
+            mode: 'cors',
+            cache: 'no-cache',
+            keepalive: true,
             headers: headers,
         };
         if (data) {
-            requestConfig['data'] = data;
+            requestConfig['body'] = data;
         }
+
         try {
-            console.log(requestConfig);
-            return await axios(requestConfig);
+            return fetch(url, requestConfig) as unknown as IRemoteResponse;
         } catch (err) {
-            // console.log(err);
             throw err;
         }
     }
