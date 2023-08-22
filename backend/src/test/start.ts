@@ -33,7 +33,6 @@ const start = async (): Promise<supertest.SuperTest<supertest.Test>> => {
 
         SDK.Init({
             serviceName: 'backend',
-            testMode: true,
         });
 
         let _app = new App();

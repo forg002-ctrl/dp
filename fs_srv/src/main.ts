@@ -7,8 +7,6 @@ import { App } from '@src/lib/App';
 
 import { appRoutes } from '@src/routes/routeIndex';
 
-global.testMode = typeof process.env.NODE_ENV === 'string' && process.env.NODE_ENV.toLowerCase() === 'test';
-
 void (async (): Promise<void> => {
     Config.Init({
         http_server_port: Number(process.env.HTTP_SERVER_PORT),

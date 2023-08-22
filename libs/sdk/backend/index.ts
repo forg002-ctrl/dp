@@ -2,17 +2,14 @@ import { IRemoteService, RemoteService } from './remoteService/RemoteService';
 
 export interface IInitOptions {
     serviceName: string;
-    testMode?: boolean;
 }
 
 export class SDK {
     protected static instance: SDK;
 
-    protected testMode: boolean;
     protected serviceName: string;
 
     protected constructor(options: IInitOptions) {
-        this.testMode = options.testMode ? options.testMode : false;
         this.serviceName = options.serviceName;
     }
 
@@ -21,7 +18,7 @@ export class SDK {
             throw new Error('Already instantiated');
         }
 
-        this.instance = options.testMode ? TestSDK.InitTestSDK(options) : new SDK(options);
+        this.instance = global.testMode ? TestSDK.InitTestSDK(options) : new SDK(options);
     }
 
     public static GetInstance(): SDK {
@@ -45,7 +42,7 @@ export class TestSDK extends SDK {
     protected constructor(options: IInitOptions) {
         super(options);
 
-        if (!options.testMode) {
+        if (!global.testMode) {
             throw new Error('Cannot init TestSDK without test mode enabled');
         }
     }

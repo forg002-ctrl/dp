@@ -7,7 +7,7 @@
     "start": "tsc && node dist/main",
     "dev": "tsc-watch --onSuccess \"node dist/main.js\"",
     "eslint": "eslint --fix .",
-    "test": "tsc && NODE_ENV=test npx jest -c jest.config.ts dist/test/integration --runInBand --passWithNoTests --detectOpenHandles"
+    "test": "tsc && docker-compose up -d database-test && npx jest -c jest.config.ts dist/test/integration --runInBand --passWithNoTests --detectOpenHandles"
   },
   "dependencies": {
     "ajv": "^8.12.0",
