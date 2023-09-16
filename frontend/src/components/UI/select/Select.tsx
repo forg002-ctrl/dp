@@ -5,11 +5,8 @@ type Option = {
     label: string;
 };
 
-type SelectProps = {
-    name: string;
-    placeholder: string;
+interface SelectProps extends React.HTMLProps<HTMLSelectElement> {
     options: Option[];
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     passClearStateFunc: (childClearStateFunc: () => void) => void;
 };
 

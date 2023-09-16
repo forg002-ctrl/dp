@@ -12,6 +12,7 @@ export interface IRemoteService {
 
 export interface IRemoteResponse {
     status: number;
+    json(): Promise<Record<string, unknown>>;
     json<T>(): Promise<T>;
 }
 

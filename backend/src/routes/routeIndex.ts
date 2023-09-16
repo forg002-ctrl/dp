@@ -24,8 +24,11 @@ import { GetBookRoute } from '@src/routes/book/GetRoute';
 import { GetBooksRoute } from '@src/routes/books/GetRoute';
 import { DeleteBookRoute } from '@src/routes/book/DeleteRoute';
 
+import { PostAccessTokenRefreshRoute } from '@src/routes/token/PostRoute';
+
 export const appRoutes: Route[] = [
     new GetPingRoute(),
+    new PostAccessTokenRefreshRoute(),
     new PostUserRegisterRoute(),
     new PostUserLoginRoute(),
     new PostAuthorRoute(),

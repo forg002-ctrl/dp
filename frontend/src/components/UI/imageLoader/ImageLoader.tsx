@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
-type ImageLoaderProps = {
+interface ImageLoaderProps {
     name: string;
     onImageLoad: (event: ChangeEvent<HTMLInputElement>) => void;
     passClearStateFunc: (childClearStateFunc: () => void) => void;

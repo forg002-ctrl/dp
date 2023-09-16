@@ -6,7 +6,6 @@ import { IRouteDescription } from '../../../../lib/routing/description/interface
 import {
     Generate201ResponseSchema,
     Generate400ResponseSchema,
-    Generate401ResponseSchema,
     Generate500ResponseSchema,
 } from '../../../../lib/routing/description/ResponseDefinition';
 
@@ -46,7 +45,6 @@ let routeDefinition: IRouteDefinition = {
     responses: {
         201: Generate201ResponseSchema('Access token refreshed successfully', responseBodySchema),
         400: Generate400ResponseSchema('Bad Request'),
-        401: Generate401ResponseSchema('Unauthorized'),
         500: Generate500ResponseSchema('Internal server error'),
     },
 };

@@ -3,7 +3,7 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-type DatePickerProps = {
+interface DatePickerProps {
     onDatePick: (date: string) => void;
     passClearStateFunc: (childClearStateFunc: () => void) => void;
 };

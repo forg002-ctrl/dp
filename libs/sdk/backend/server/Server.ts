@@ -1,4 +1,4 @@
-import express, { Express, Router, Request, Response } from 'express';
+import express, { Express, Router, Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
@@ -26,16 +26,18 @@ export class Server {
         this.port = options.port;
         this.swaggerDocumention = options.swaggerDocumention;
         this.app = express();
-        this.app.use(cors());
+        this.app.use(cors({
+            origin: 'http://localhost:3002',
+            credentials: true,
+        }));
         this.app.use(cookieParser());
         this.app.use(bodyParser.json());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
 
-        // TODO: Remove for make authorization work
-        // for (let middleware of options.middlewares) {
-        //     this.app.use('/', middleware);
-        // }
+        for (let middleware of options.middlewares) {
+            this.app.use(middleware);
+        }
     }
 
     public static Init(options: IServerOptions): void {

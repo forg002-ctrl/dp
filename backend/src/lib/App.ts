@@ -3,12 +3,12 @@ import { Express } from 'express';
 import { Config } from '@src/lib/Config';
 
 import { Server } from '@src/ext/sdk/backend/server/Server';
-import { Model } from '@src/ext/sdk/backend/storage/postgresql/model/Model';
-import { Association } from '@src/ext/sdk/backend/storage/postgresql/model/Association';
+import { Model } from '@src/ext/sdk/backend/storage/postgresql/parts/Model';
+import { Association } from '@src/ext/sdk/backend/storage/postgresql/parts/Association';
 import { Route } from '@src/ext/sdk/backend/app/route/Route';
-import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 import { Documentation } from '@src/ext/sdk/backend/swagger/Documentation';
 
+import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 import { MiddlewareFactory } from '@src/ext/sdk/backend/server/MiddlewareFactory';
 
 export interface IAppRunOptions {
@@ -37,6 +37,7 @@ export class App {
         Server.Init({
             port: Config.HTTP_SERVER_PORT,
             middlewares: [
+                MiddlewareFactory.GenerateCorsMiddleware(),
                 MiddlewareFactory.GenerateAuthorizationMiddleware({
                     routeIndex: routes,
                 }),

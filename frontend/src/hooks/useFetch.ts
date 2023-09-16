@@ -1,3 +1,4 @@
+import { ApiClient } from 'helpers/apiClient'
 import { useEffect, useReducer, useRef } from 'react'
 
 interface State<T> {
@@ -16,6 +17,10 @@ export function useFetch<T = unknown>(
   url?: string,
   options?: RequestInit,
 ): State<T> {
+  const apiClient = new ApiClient({
+    http_server: 'http://localhost:3001',
+  });
+  
   const cache = useRef<Cache<T>>({})
 
   const cancelRequest = useRef<boolean>(false)
@@ -28,22 +33,22 @@ export function useFetch<T = unknown>(
   const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
     switch (action.type) {
       case 'loading':
-        return { ...initialState }
+        return { ...initialState };
       case 'fetched':
-        return { ...initialState, data: action.payload }
+        return { ...initialState, data: action.payload };
       case 'error':
-        return { ...initialState, error: action.payload }
+        return { ...initialState, error: action.payload };
       default:
-        return state
+        return state;
     }
   }
 
-  const [state, dispatch] = useReducer(fetchReducer, initialState)
+  const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {
-    if (!url) return
+    if (!url) return;
 
-    cancelRequest.current = false
+    cancelRequest.current = false;
 
     const fetchData = async () => {
       dispatch({ type: 'loading' })
@@ -54,12 +59,9 @@ export function useFetch<T = unknown>(
       }
 
       try {
-        const response = await fetch(url, options)
-        if (!response.ok) {
-          throw new Error(response.statusText)
-        }
+        const response = await apiClient.get<{status: number, data: Record<string, unknown>}>(url);
 
-        const data = (await response.json()) as T
+        const data = response as T;
         cache.current[url] = data
         if (cancelRequest.current) return
 
@@ -71,12 +73,12 @@ export function useFetch<T = unknown>(
       }
     }
 
-    void fetchData()
+    void fetchData();
 
     return () => {
       cancelRequest.current = true
-    }
+    };
   }, [url])
 
-  return state
+  return state;
 }

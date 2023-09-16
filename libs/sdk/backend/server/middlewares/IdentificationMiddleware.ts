@@ -23,7 +23,7 @@ let _tokens: IIdentificationMiddlewareOptions = {
 };
 
 const IdentificationMiddleware: IMiddlewareInterface = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
-    if (req.method === 'OPTIONS' || req.path.match(/^\/swagger.*/gi)) {
+    if (req.method === 'OPTIONS' || req.path.match(/^\/swagger.*/gi) || req.path ==='/token/refresh') {
         return next();
     }
 
@@ -35,14 +35,16 @@ const IdentificationMiddleware: IMiddlewareInterface = async (req: CustomRequest
         if (accessToken) {
             let decodedData = JwtService.GetInstance().verifyJwt(accessToken, 'ACCESS_TOKEN_PUBLIC_KEY', _tokens.access_token_public_key, _tokens.refresh_token_public_key) as unknown as IJwtTokenPayload;
             if (!decodedData) {
-                throw new AuthError();
+                res.status(401);
+                res.json({ error: 'Unauthorized' });
             }
             req.appUser = decodedData;
         }
 
         return next();
     } catch (err) {
-        throw new AuthError();
+        res.status(401);
+        res.json({ error: 'Unauthorized' });
     }
 };
 

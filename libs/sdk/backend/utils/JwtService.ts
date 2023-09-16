@@ -26,7 +26,7 @@ export class JwtService {
         expireTime: string, access_token_private_key: string, refresh_token_private_key: string): string {
         switch (tokenKeyName) {
             case 'ACCESS_TOKEN_PRIVATE_KEY':
-                return jwt.sign(payload, access_token_private_key, {
+                return jwt.sign(payload, `${access_token_private_key}`, {
                     algorithm: 'RS256',
                     expiresIn: expireTime,
                 });

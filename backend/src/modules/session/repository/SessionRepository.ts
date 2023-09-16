@@ -2,8 +2,6 @@ import { Model, ModelCtor } from 'sequelize';
 
 import { PostgresqlClient } from '@src/ext/sdk/backend/storage/postgresql/PostgresqlClient';
 
-import { NotFoundError } from '@src/ext/sdk/backend/errors/types/NotFoundError';
-
 import { ISessionCreationRepository, ISessionCreationRepositoryData, ISessionCreationResponse } from '@src/modules/session/SessionCreation';
 import { ISessionGettingOptions, ISessionGettingRepository, ISessionGettingResponse } from '@src/modules/session/SessionGetting';
 import { ISessionDeletingOptions, ISessionDeletingRepository } from '@src/modules/session/SessionDeleting';
@@ -28,24 +26,30 @@ ISessionDeletingRepository {
     public async create(data: ISessionCreationRepositoryData): Promise<ISessionCreationResponse> {
         let response = await this.sessionModel.create({
             id_session: data.id_session,
-            id_user: data.id_user,
+            dbUserId: data.id_user,
         });
 
         return {
-            id_session: response.dataValues.id_session,
+            id_session: response.dataValues.id,
         };
     }
 
     public async get(options: ISessionGettingOptions): Promise<ISessionGettingResponse> {
-        let response = await this.sessionModel.findByPk(options.id_session);
+        let response = await this.sessionModel.findByPk(options.id_session, {
+            attributes: [
+                ['id', 'id_session'],
+                ['dbUserId', 'id_user'],
+            ],
+            raw: true,
+        }) as unknown as ISessionGettingResponse | null;
         if (!response) {
-            throw new NotFoundError('Session was not found');
+            throw new Error('Session was not found');
         }
 
         return {
-            id_session: response.dataValues.id_session,
-            id_user: response.dataValues.id_user,
-            createdAt: response.dataValues.createdAt,
+            id_session: response.id_session,
+            id_user: response.id_user,
+            createdAt: response.createdAt,
         };
     }
 

@@ -98,18 +98,28 @@ IUserGettingRepository {
     }
 
     public async getUser(options: IUserGettingOptions): Promise<IUserGettingResponse> {
-        let response = await this.userModel.findByPk(options.id_user);
+        let response = await this.userModel.findByPk(options.id_user, {
+            attributes: [
+                ['id', 'id_user'],
+                'username',
+                'password',
+                'email',
+                'createdAt',
+                'updatedAt',
+            ],
+            raw: true,
+        }) as unknown as IUserGettingResponse | null;
         if (!response) {
-            throw new NotFoundError('Session was not found');
+            throw new Error('User was not found');
         }
 
         return {
-            id_user: response.dataValues.id_user,
-            username: response.dataValues.username,
-            password: response.dataValues.password,
-            email: response.dataValues.email,
-            createdAt: response.dataValues.createdAt,
-            updatedAt: response.dataValues.updatedAt,
+            id_user: response.id_user,
+            username: response.username,
+            password: response.password,
+            email: response.email,
+            createdAt: response.createdAt,
+            updatedAt: response.updatedAt,
         };
     }
 }

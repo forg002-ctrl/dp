@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export interface IListBook {
-    id_book: string;
-    id_author: string;
-    id_genre: string;
+    id_book: number;
+    id_author: number;
+    id_genre: number;
     author_fullname: string;
     genre_name: string;
     title: string;
@@ -16,9 +16,9 @@ export interface IListReponse {
 }
 
 export interface IGetBook {
-    id_book: string;
-    id_author: string;
-    id_genre: string;
+    id_book: number;
+    id_author: number;
+    id_genre: number;
     author_fullname: string;
     genre_name: string;
     title: string;
@@ -37,7 +37,7 @@ export class BookService {
         return response.data;
     }
 
-    static async getBook(id_book: string): Promise<IGetBook> {
+    static async getBook(id_book: number): Promise<IGetBook> {
         let response = await axios.get(`backend/book/${id_book}`);
         if (response.status !== 200) {
             throw new Error('Failed to fetch the data from backend');

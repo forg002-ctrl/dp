@@ -34,7 +34,7 @@ const AuthorizationMiddleware: IMiddlewareInterface = async (req: Request, res: 
             return;
         }
 
-        if (req.path.match(/^\/swagger.*/gi)) {
+        if (req.path.match(/^\/swagger.*/gi) || req.path == '/token/refresh') {
             return next();
         }
 

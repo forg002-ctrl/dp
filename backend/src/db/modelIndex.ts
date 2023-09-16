@@ -1,4 +1,4 @@
-import { Model } from '@src/ext/sdk/backend/storage/postgresql/model/Model';
+import { Model } from '@src/ext/sdk/backend/storage/postgresql/parts/Model';
 
 import { UserModel } from '@src/db/models/userModel';
 import { SessionModel } from '@src/db/models/sessionModel';

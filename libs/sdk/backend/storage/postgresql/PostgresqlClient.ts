@@ -1,7 +1,7 @@
 import { ModelCtor, Sequelize, Model } from 'sequelize';
 
-import { IModel } from './model/Model';
-import { IAssociation } from './model/Association';
+import { IModel } from './parts/Model';
+import { IAssociation } from './parts/Association';
 
 export interface IPostgresqlClientOptions {
     db_name: string;
